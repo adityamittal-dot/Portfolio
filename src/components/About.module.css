@@ -1,0 +1,44 @@
+.about {
+  padding: 44px var(--space-8);
+  border-right: 1px solid var(--color-divider);
+}
+
+@media (max-width: 860px) {
+  .about {
+    border-right: none;
+    border-bottom: 1px solid var(--color-divider);
+  }
+}
+
+@media (max-width: 640px) {
+  .about {
+    padding: 40px var(--space-4);
+  }
+}
+
+.heading {
+  margin: 0 0 var(--space-6);
+}
+
+.bio {
+  margin: 0 0 var(--space-6);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-neutral-300);
+  max-width: 58ch;
+}
+
+.marker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--color-accent-300);
+  display: inline-block;
+  background: linear-gradient(transparent 62%, var(--color-accent-800) 62%);
+  transform: rotate(-0.5deg);
+}
+
+.tag {
+  margin-top: var(--space-8);
+}

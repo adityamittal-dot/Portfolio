@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "../styles/nocturne.css";
+
+:root {
+  /* next/font/google supplies the actual @font-face rules and hashed
+     family names via these CSS variables (set on <html> in layout.tsx);
+     point Nocturne's font roles at them instead of the CDN @import. */
+  --font-heading: var(--font-inter), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}

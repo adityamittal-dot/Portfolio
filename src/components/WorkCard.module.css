@@ -1,0 +1,79 @@
+@keyframes glitch {
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-1px, 1px);
+  }
+  40% {
+    transform: translate(1px, -1px);
+  }
+  60% {
+    transform: translate(-1px, 0);
+  }
+  80% {
+    transform: translate(1px, 1px);
+  }
+}
+
+.card {
+  padding: 0;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.shot {
+  height: 172px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-neutral-900) 0 6px,
+    #1c1f2c 6px 12px
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4);
+}
+
+.shotLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--color-neutral-600);
+}
+
+.body {
+  padding: var(--space-6);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+}
+
+.title {
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  display: block;
+  color: var(--color-text);
+}
+
+.title:hover {
+  animation: glitch 0.22s steps(2) infinite;
+  color: var(--color-accent-300);
+}
+
+.description {
+  color: var(--color-neutral-400);
+}
+
+.tags {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}

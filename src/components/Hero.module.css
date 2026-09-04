@@ -1,0 +1,132 @@
+.wrap {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.tickerWrap {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.copy {
+  padding: 56px var(--space-8) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .copy {
+    padding: 40px var(--space-4) 40px;
+  }
+}
+
+.whoami {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.whoamiPrompt {
+  color: var(--color-accent);
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 66px;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+@media (max-width: 860px) {
+  .headline {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headline {
+    font-size: 34px;
+  }
+}
+
+.headlineAccent {
+  color: var(--color-accent-300);
+}
+
+.body {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--color-neutral-400);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.actions a {
+  white-space: nowrap;
+}
+
+.tags {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-top: var(--space-4);
+}
+
+.artPanel {
+  position: relative;
+  border-left: 1px solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: radial-gradient(
+    120% 80% at 70% 30%,
+    var(--color-accent-900) 0%,
+    transparent 70%
+  );
+  min-height: 320px;
+}
+
+@media (max-width: 860px) {
+  .artPanel {
+    border-left: none;
+    border-top: 1px solid var(--color-divider);
+  }
+}
+
+.artLabel {
+  position: absolute;
+  left: var(--space-6);
+  bottom: var(--space-4);
+}
+
+.ticker {
+  padding: var(--space-4) var(--space-8);
+  border-bottom: 1px solid var(--color-divider);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-neutral-600);
+  display: flex;
+  gap: var(--space-8);
+  overflow: hidden;
+  white-space: nowrap;
+}
