@@ -1,4 +1,6 @@
 import styles from "./Nav.module.css";
+import GithubIcon from "./GithubIcon";
+import { GITHUB_URL } from "@/lib/profile";
 
 const LINKS = [
   { label: "work", href: "#work" },
@@ -23,10 +25,21 @@ export default function Nav() {
             </a>
           ))}
         </nav>
-        {/* TODO: replace with the real resume PDF URL. */}
-        <a href="#" className={`btn btn-primary ${styles.resume}`}>
-          resume.pdf ↓
-        </a>
+        <div className={styles.actions}>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+            aria-label="GitHub profile"
+          >
+            <GithubIcon />
+          </a>
+          {/* TODO: replace with the real resume PDF URL. */}
+          <a href="#" className={`btn btn-primary ${styles.resume}`}>
+            resume.pdf ↓
+          </a>
+        </div>
       </div>
     </header>
   );

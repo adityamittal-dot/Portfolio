@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./CommandPalette.module.css";
+import { GITHUB_API_URL, GITHUB_URL } from "@/lib/profile";
 
 interface Section {
   id: string;
@@ -27,7 +28,43 @@ interface Command {
   name: string;
   aliases?: string[];
   hint: string;
-  run: (args: string[]) => CommandResult;
+  run: (args: string[]) => CommandResult | Promise<CommandResult>;
+}
+
+interface GithubProfile {
+  login: string;
+  name: string | null;
+  bio: string | null;
+  public_repos: number;
+  followers: number;
+  following: number;
+  html_url: string;
+}
+
+async function fetchGithubProfile(): Promise<CommandResult> {
+  let response: Response;
+  try {
+    response = await fetch(GITHUB_API_URL);
+  } catch {
+    return { output: "github: request failed — check your connection and try again." };
+  }
+
+  if (response.status === 403 || response.status === 429) {
+    return { output: `github: rate limited by the GitHub API — try again shortly, or visit ${GITHUB_URL}` };
+  }
+  if (!response.ok) {
+    return { output: `github: profile fetch failed (${response.status}).` };
+  }
+
+  const profile: GithubProfile = await response.json();
+  const lines = [
+    profile.name ? `${profile.login} (${profile.name})` : profile.login,
+    profile.bio,
+    `${profile.public_repos} public repos · ${profile.followers} followers · ${profile.following} following`,
+    profile.html_url,
+  ].filter(Boolean);
+
+  return { output: lines.join("\n") };
 }
 
 function renderHelp(): ReactNode {
@@ -90,12 +127,17 @@ const COMMANDS: Command[] = [
     run: () => ({ output: "Resume isn't linked yet — email adityamittal529@gmail.com for a copy." }),
   },
   {
+    name: "github",
+    aliases: ["gh"],
+    hint: "live stats from the GitHub profile",
+    run: fetchGithubProfile,
+  },
+  {
     name: "socials",
-    aliases: ["github", "linkedin"],
-    hint: "github / linkedin",
+    aliases: ["linkedin"],
+    hint: "where else to find me",
     run: () => ({
-      output:
-        "GitHub and LinkedIn links are coming soon — reach adityamittal529@gmail.com or +91 78368 50977 in the meantime.",
+      output: `${GITHUB_URL}\nLinkedIn link is coming soon — reach adityamittal529@gmail.com or +91 78368 50977 in the meantime.\nRun 'github' for live profile stats.`,
     }),
   },
   {
@@ -136,6 +178,7 @@ function findCommand(name: string): Command | undefined {
 }
 
 interface TranscriptEntry {
+  id: number;
   command: string;
   output?: ReactNode;
 }
@@ -149,6 +192,7 @@ export default function CommandPalette() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
+  const nextEntryId = useRef(0);
 
   const close = useCallback(() => setIsOpen(false), []);
 
@@ -192,38 +236,53 @@ export default function CommandPalette() {
     }, 220);
   }
 
+  function pushEntry(command: string, output?: ReactNode): number {
+    const id = nextEntryId.current++;
+    setTranscript((t) => [...t, { id, command, output }]);
+    return id;
+  }
+
+  function updateEntry(id: number, output: ReactNode) {
+    setTranscript((t) => t.map((entry) => (entry.id === id ? { ...entry, output } : entry)));
+  }
+
+  function applyResult(entryId: number, result: CommandResult) {
+    if (result.clear) {
+      setTranscript([]);
+      return;
+    }
+    updateEntry(entryId, result.output);
+    if (result.navigate) navigateToSection(result.navigate);
+    if (result.close) close();
+  }
+
   function submit(raw: string) {
     const trimmed = raw.trim();
     if (!trimmed) return;
 
     setHistory((h) => [...h, trimmed]);
     setHistoryIndex(null);
+    setInputValue("");
 
     const [name, ...args] = trimmed.split(/\s+/);
     const command = findCommand(name);
 
     if (!command) {
-      setTranscript((t) => [
-        ...t,
-        { command: trimmed, output: `command not found: ${name} — type 'help' for a list.` },
-      ]);
-      setInputValue("");
+      pushEntry(trimmed, `command not found: ${name} — type 'help' for a list.`);
       return;
     }
 
     const result = command.run(args);
 
-    if (result.clear) {
-      setTranscript([]);
-      setInputValue("");
+    if (result instanceof Promise) {
+      const entryId = pushEntry(trimmed, "fetching…");
+      result
+        .then((resolved) => applyResult(entryId, resolved))
+        .catch(() => updateEntry(entryId, `${name}: request failed — try again in a moment.`));
       return;
     }
 
-    setTranscript((t) => [...t, { command: trimmed, output: result.output }]);
-    setInputValue("");
-
-    if (result.navigate) navigateToSection(result.navigate);
-    if (result.close) close();
+    applyResult(pushEntry(trimmed, result.output), result);
   }
 
   function autocomplete() {
@@ -234,7 +293,7 @@ export default function CommandPalette() {
     if (matches.length === 1) {
       setInputValue(matches[0]);
     } else if (matches.length > 1) {
-      setTranscript((t) => [...t, { command: inputValue, output: matches.join("  ") }]);
+      pushEntry(inputValue, matches.join("  "));
     }
   }
 
@@ -304,8 +363,8 @@ export default function CommandPalette() {
 
             {transcript.length > 0 && (
               <div className={styles.transcript} ref={transcriptRef} aria-live="polite">
-                {transcript.map((entry, i) => (
-                  <div className={styles.entry} key={i}>
+                {transcript.map((entry) => (
+                  <div className={styles.entry} key={entry.id}>
                     <div className={styles.entryCommand}>
                       <span className={styles.entryPrompt}>$</span> {entry.command}
                     </div>

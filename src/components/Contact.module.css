@@ -70,6 +70,18 @@
   color: var(--color-accent-300);
 }
 
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  vertical-align: text-bottom;
+}
+
+.icon {
+  width: 13px;
+  height: 13px;
+}
+
 .signature {
   color: var(--color-neutral-700);
   font-size: 11px;

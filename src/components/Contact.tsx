@@ -1,5 +1,7 @@
 import shared from "@/styles/shared.module.css";
 import styles from "./Contact.module.css";
+import GithubIcon from "./GithubIcon";
+import { GITHUB_URL } from "@/lib/profile";
 
 export default function Contact() {
   return (
@@ -17,8 +19,16 @@ export default function Contact() {
           </a>
           <span className={styles.meta}>
             +91 78368 50977 ·{" "}
-            {/* TODO: replace with real GitHub profile URL */}
-            <a href="#">github</a> ·{" "}
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.iconLink}
+            >
+              <GithubIcon className={styles.icon} />
+              github
+            </a>{" "}
+            ·{" "}
             {/* TODO: replace with real LinkedIn profile URL */}
             <a href="#">linkedin</a> · Noida, IN
           </span>
