@@ -1,6 +1,7 @@
 import shared from "@/styles/shared.module.css";
 import styles from "./page.module.css";
 import Nav from "@/components/Nav";
+import CommandPalette from "@/components/CommandPalette";
 import Hero from "@/components/Hero";
 import WorkGrid from "@/components/WorkGrid";
 import StackDiagram from "@/components/StackDiagram";
@@ -26,6 +27,7 @@ export default function Home() {
       </section>
       <LabGrid />
       <Contact />
+      <CommandPalette />
     </>
   );
 }

@@ -3,7 +3,7 @@ import styles from "./Contact.module.css";
 
 export default function Contact() {
   return (
-    <section className={styles.section}>
+    <section id="contact" className={styles.section}>
       <div className={`${shared.container} ${styles.inner}`}>
         <div className={styles.left}>
           <span className={styles.prompt}>
