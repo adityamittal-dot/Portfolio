@@ -57,7 +57,7 @@ const COMMANDS: Command[] = [
     run: (args) => {
       const target = args[0];
       if (!target) return { output: "cd: missing operand" };
-      const section = SECTIONS.find((s) => s.id === target.toLowerCase());
+      const section = SECTIONS.find((s) => s.id === stripSlash(target).toLowerCase());
       if (!section) return { output: `cd: no such directory: ${target}` };
       return { output: `→ ${section.blurb}`, navigate: section.id };
     },
@@ -123,8 +123,15 @@ const COMMANDS: Command[] = [
   },
 ];
 
+// `ls` prints entries as "about/ contact/ …" like a real directory listing,
+// so people naturally type the trailing slash back — tolerate it everywhere,
+// the way a real shell's `cd` does.
+function stripSlash(value: string): string {
+  return value.replace(/\/+$/, "");
+}
+
 function findCommand(name: string): Command | undefined {
-  const lower = name.toLowerCase();
+  const lower = stripSlash(name.toLowerCase());
   return COMMANDS.find((c) => c.name === lower || c.aliases?.includes(lower));
 }
 
