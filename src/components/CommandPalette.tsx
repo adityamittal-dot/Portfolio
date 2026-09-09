@@ -22,7 +22,6 @@ interface CommandResult {
   navigate?: string;
   close?: boolean;
   clear?: boolean;
-  matrix?: boolean;
 }
 
 interface Command {
@@ -149,11 +148,6 @@ const COMMANDS: Command[] = [
     }),
   },
   {
-    name: "matrix",
-    hint: "",
-    run: () => ({ output: "Wake up, Aditya…\nFollow the white rabbit.", matrix: true }),
-  },
-  {
     name: "clear",
     hint: "clear the transcript",
     run: () => ({ clear: true }),
@@ -189,46 +183,30 @@ interface TranscriptEntry {
   output?: ReactNode;
 }
 
-// Classic cheat-code sequence. Matched key-by-key against whatever the
-// visitor is pressing, anywhere on the page — the way the real thing works.
-const KONAMI_CODE = [
-  "ArrowUp",
-  "ArrowUp",
-  "ArrowDown",
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowLeft",
-  "ArrowRight",
-  "b",
-  "a",
-];
-
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
-  const [matrixActive, setMatrixActive] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const nextEntryId = useRef(0);
-  const konamiProgress = useRef(0);
-  const matrixTimeout = useRef<number | undefined>(undefined);
 
   const close = useCallback(() => setIsOpen(false), []);
-
-  const triggerMatrixEffect = useCallback(() => {
-    setMatrixActive(true);
-    window.clearTimeout(matrixTimeout.current);
-    matrixTimeout.current = window.setTimeout(() => setMatrixActive(false), 2600);
-  }, []);
 
   // A greeting for anyone who actually opens devtools — most people who do
   // that on a portfolio are exactly the audience this site is for.
   useEffect(() => {
+    const cat = [
+      "    /\\_/\\",
+      "   ( o.o )",
+      "    > ^ <",
+      "   /|   |\\",
+      "  (_|   |_)",
+    ].join("\n");
+    console.log(`%c${cat}`, "color:#9184d9;font-family:monospace;font-size:12px;line-height:1.3;");
     console.log(
       "%cLooking under the hood?",
       "color:#9184d9;font-family:monospace;font-size:14px;font-weight:600;",
@@ -246,18 +224,6 @@ export default function CommandPalette() {
         !!target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
       const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
 
-      const expected = KONAMI_CODE[konamiProgress.current];
-      const pressed = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      if (pressed === expected) {
-        konamiProgress.current += 1;
-        if (konamiProgress.current === KONAMI_CODE.length) {
-          konamiProgress.current = 0;
-          triggerMatrixEffect();
-        }
-      } else {
-        konamiProgress.current = pressed === KONAMI_CODE[0] ? 1 : 0;
-      }
-
       if (isCmdK) {
         e.preventDefault();
         setIsOpen((open) => !open);
@@ -274,7 +240,7 @@ export default function CommandPalette() {
     }
     document.addEventListener("keydown", handleGlobalKeyDown);
     return () => document.removeEventListener("keydown", handleGlobalKeyDown);
-  }, [isOpen, close, triggerMatrixEffect]);
+  }, [isOpen, close]);
 
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
@@ -308,7 +274,6 @@ export default function CommandPalette() {
     }
     updateEntry(entryId, result.output);
     if (result.navigate) navigateToSection(result.navigate);
-    if (result.matrix) triggerMatrixEffect();
     if (result.close) close();
   }
 
@@ -381,8 +346,6 @@ export default function CommandPalette() {
 
   return (
     <>
-      {matrixActive && <div className={styles.matrixOverlay} aria-hidden="true" />}
-
       <button
         type="button"
         className={styles.trigger}
