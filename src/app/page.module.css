@@ -1,3 +1,22 @@
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skipLink:focus-visible {
+  top: var(--space-4);
+}
+
 .aboutExperience {
   border-bottom: 1px solid var(--color-divider);
 }

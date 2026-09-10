@@ -14,19 +14,24 @@ import Contact from "@/components/Contact";
 export default function Home() {
   return (
     <>
+      <a href="#main-content" className={styles.skipLink}>
+        Skip to content
+      </a>
       <Nav />
-      <Hero />
-      <WorkGrid />
-      <StackDiagram />
-      <PortraitSection />
-      <section id="about" className={styles.aboutExperience}>
-        <div className={`${shared.container} ${styles.aboutExperienceGrid}`}>
-          <About />
-          <Experience />
-        </div>
-      </section>
-      <LabGrid />
-      <Contact />
+      <main id="main-content">
+        <Hero />
+        <WorkGrid />
+        <StackDiagram />
+        <PortraitSection />
+        <section id="about" className={styles.aboutExperience}>
+          <div className={`${shared.container} ${styles.aboutExperienceGrid}`}>
+            <About />
+            <Experience />
+          </div>
+        </section>
+        <LabGrid />
+        <Contact />
+      </main>
       <CommandPalette />
     </>
   );
