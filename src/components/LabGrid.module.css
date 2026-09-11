@@ -42,6 +42,11 @@
   background: var(--color-accent-900);
 }
 
+.tile:nth-child(2):hover {
+  border-color: var(--color-cyan);
+  background: var(--color-cyan-900);
+}
+
 .swatch {
   height: 96px;
   margin-bottom: var(--space-4);
@@ -49,6 +54,12 @@
     linear-gradient(90deg, rgba(145, 132, 217, 0.18) 1px, transparent 1px);
   background-size: 8px 8px;
   background-color: var(--color-neutral-900);
+}
+
+.tile:nth-child(2) .swatch {
+  background-image: linear-gradient(rgba(82, 224, 196, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 224, 196, 0.18) 1px, transparent 1px);
+  background-size: 8px 8px;
 }
 
 .name {
