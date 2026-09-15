@@ -103,56 +103,67 @@
 }
 
 /* — light theme —
-   Same token names, mirrored values: the neutral ramp inverts (100↔900,
-   200↔800, …) so "light neutral" and "dark neutral" keep their existing
-   semantic meaning (foreground-ish vs. background-ish) instead of every
-   consumer needing theme-aware logic. --color-divider and the dot grid
-   already derive from --color-text, so they pick this up for free.
-   Applies on explicit choice (`[data-theme="light"]`) or, absent a choice,
-   on a light system preference. */
+   Independently calibrated, not a literal hex-swap of the dark ramp: the
+   dark ramp's values were tuned for contrast against a near-black page
+   (#161826), so reusing them verbatim under new variable names produced
+   washed-out text once the page background flips to near-white — e.g. the
+   old neutral-400 (#b2b6ca, legible on dark) went nowhere near AA when
+   reassigned to a light-mode token. Every step below is instead picked to
+   hit roughly its own WCAG AA contrast target against --color-bg
+   (#f6f6fb): 100–400 sit at 7:1+ (headings/body), 500–600 at ~4.5–5.3:1
+   (secondary text and small mono captions both need real AA here, not
+   just "large text" AA), 700–900 stay low-contrast on purpose (borders,
+   dividers, subtle fills). --color-accent-300 is overridden too — it's
+   used directly as link/hover text color in a dozen places, and the dark
+   theme's near-white accent-300 is illegible on a light page.
+   --color-divider and the dot grid derive from --color-text already, so
+   they adapt for free. Applies on explicit choice (`[data-theme="light"]`)
+   or, absent a choice, on a light system preference. */
 :root[data-theme="light"] {
   --color-bg: #f6f6fb;
   --color-surface: #ffffff;
-  --color-text: #1b1c26;
-  --color-accent: #796cbf;
-  --color-accent-2: #7972a9;
+  --color-text: #15161f;
+  --color-accent: #685aba;
+  --color-accent-2: #6f6a99;
+  --color-accent-300: #685aba;
 
-  --color-neutral-100: #292b31;
-  --color-neutral-200: #3f424d;
-  --color-neutral-300: #595d6c;
-  --color-neutral-400: #75798c;
-  --color-neutral-500: #9397ab;
-  --color-neutral-600: #b2b6ca;
-  --color-neutral-700: #cfd3e5;
-  --color-neutral-800: #e4e7f5;
-  --color-neutral-900: #f3f5fe;
+  --color-neutral-100: #15161f;
+  --color-neutral-200: #262832;
+  --color-neutral-300: #383a46;
+  --color-neutral-400: #4f5262;
+  --color-neutral-500: #63667a;
+  --color-neutral-600: #6a6d81;
+  --color-neutral-700: #9296a8;
+  --color-neutral-800: #c3c6d8;
+  --color-neutral-900: #e8eaf3;
 
-  --shadow-sm: 0 1px 2px rgba(27, 28, 38, 0.08);
-  --shadow-md: 0 1px 2px rgba(27, 28, 38, 0.05), 0 8px 20px rgba(27, 28, 38, 0.10);
-  --shadow-lg: 0 4px 10px rgba(27, 28, 38, 0.08), 0 20px 45px rgba(27, 28, 38, 0.14);
+  --shadow-sm: 0 1px 2px rgba(21, 22, 31, 0.08);
+  --shadow-md: 0 1px 2px rgba(21, 22, 31, 0.05), 0 8px 20px rgba(21, 22, 31, 0.10);
+  --shadow-lg: 0 4px 10px rgba(21, 22, 31, 0.08), 0 20px 45px rgba(21, 22, 31, 0.14);
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --color-bg: #f6f6fb;
     --color-surface: #ffffff;
-    --color-text: #1b1c26;
-    --color-accent: #796cbf;
-    --color-accent-2: #7972a9;
+    --color-text: #15161f;
+    --color-accent: #685aba;
+    --color-accent-2: #6f6a99;
+    --color-accent-300: #685aba;
 
-    --color-neutral-100: #292b31;
-    --color-neutral-200: #3f424d;
-    --color-neutral-300: #595d6c;
-    --color-neutral-400: #75798c;
-    --color-neutral-500: #9397ab;
-    --color-neutral-600: #b2b6ca;
-    --color-neutral-700: #cfd3e5;
-    --color-neutral-800: #e4e7f5;
-    --color-neutral-900: #f3f5fe;
+    --color-neutral-100: #15161f;
+    --color-neutral-200: #262832;
+    --color-neutral-300: #383a46;
+    --color-neutral-400: #4f5262;
+    --color-neutral-500: #63667a;
+    --color-neutral-600: #6a6d81;
+    --color-neutral-700: #9296a8;
+    --color-neutral-800: #c3c6d8;
+    --color-neutral-900: #e8eaf3;
 
-    --shadow-sm: 0 1px 2px rgba(27, 28, 38, 0.08);
-    --shadow-md: 0 1px 2px rgba(27, 28, 38, 0.05), 0 8px 20px rgba(27, 28, 38, 0.10);
-    --shadow-lg: 0 4px 10px rgba(27, 28, 38, 0.08), 0 20px 45px rgba(27, 28, 38, 0.14);
+    --shadow-sm: 0 1px 2px rgba(21, 22, 31, 0.08);
+    --shadow-md: 0 1px 2px rgba(21, 22, 31, 0.05), 0 8px 20px rgba(21, 22, 31, 0.10);
+    --shadow-lg: 0 4px 10px rgba(21, 22, 31, 0.08), 0 20px 45px rgba(21, 22, 31, 0.14);
   }
 }
 
