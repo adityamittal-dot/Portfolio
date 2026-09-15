@@ -5,6 +5,7 @@ import CommandPalette from "@/components/CommandPalette";
 import Hero from "@/components/Hero";
 import WorkGrid from "@/components/WorkGrid";
 import StackDiagram from "@/components/StackDiagram";
+import AIWorkflow from "@/components/AIWorkflow";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import LabGrid from "@/components/LabGrid";
@@ -21,6 +22,7 @@ export default function Home() {
         <Hero />
         <WorkGrid />
         <StackDiagram />
+        <AIWorkflow />
         <section id="about" className={styles.aboutExperience}>
           <div className={`${shared.container} ${styles.aboutExperienceGrid}`}>
             <About />
