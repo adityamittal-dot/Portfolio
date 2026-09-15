@@ -19,4 +19,11 @@ body {
   background-image: var(--dot-grid-image);
   background-size: var(--dot-grid-size) var(--dot-grid-size);
   color: var(--color-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
 }

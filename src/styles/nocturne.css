@@ -18,7 +18,7 @@
      the accent now reads as an accent rather than another neutral. */
   --color-accent-2: #a7a1db; /* the machine-derived stand-in follows: same
      hue, same L 0.734, chroma at the same 2:3 proportion it held */
-  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+  --color-divider: color-mix(in srgb, var(--color-text) 16%, transparent);
 
   /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
@@ -100,6 +100,60 @@
   --shadow-sm: 0 0 0 1px #3f424d;
   --shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0,0,0,0.55);
   --shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0,0,0,0.65);
+}
+
+/* — light theme —
+   Same token names, mirrored values: the neutral ramp inverts (100↔900,
+   200↔800, …) so "light neutral" and "dark neutral" keep their existing
+   semantic meaning (foreground-ish vs. background-ish) instead of every
+   consumer needing theme-aware logic. --color-divider and the dot grid
+   already derive from --color-text, so they pick this up for free.
+   Applies on explicit choice (`[data-theme="light"]`) or, absent a choice,
+   on a light system preference. */
+:root[data-theme="light"] {
+  --color-bg: #f6f6fb;
+  --color-surface: #ffffff;
+  --color-text: #1b1c26;
+  --color-accent: #796cbf;
+  --color-accent-2: #7972a9;
+
+  --color-neutral-100: #292b31;
+  --color-neutral-200: #3f424d;
+  --color-neutral-300: #595d6c;
+  --color-neutral-400: #75798c;
+  --color-neutral-500: #9397ab;
+  --color-neutral-600: #b2b6ca;
+  --color-neutral-700: #cfd3e5;
+  --color-neutral-800: #e4e7f5;
+  --color-neutral-900: #f3f5fe;
+
+  --shadow-sm: 0 1px 2px rgba(27, 28, 38, 0.08);
+  --shadow-md: 0 1px 2px rgba(27, 28, 38, 0.05), 0 8px 20px rgba(27, 28, 38, 0.10);
+  --shadow-lg: 0 4px 10px rgba(27, 28, 38, 0.08), 0 20px 45px rgba(27, 28, 38, 0.14);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-bg: #f6f6fb;
+    --color-surface: #ffffff;
+    --color-text: #1b1c26;
+    --color-accent: #796cbf;
+    --color-accent-2: #7972a9;
+
+    --color-neutral-100: #292b31;
+    --color-neutral-200: #3f424d;
+    --color-neutral-300: #595d6c;
+    --color-neutral-400: #75798c;
+    --color-neutral-500: #9397ab;
+    --color-neutral-600: #b2b6ca;
+    --color-neutral-700: #cfd3e5;
+    --color-neutral-800: #e4e7f5;
+    --color-neutral-900: #f3f5fe;
+
+    --shadow-sm: 0 1px 2px rgba(27, 28, 38, 0.08);
+    --shadow-md: 0 1px 2px rgba(27, 28, 38, 0.05), 0 8px 20px rgba(27, 28, 38, 0.10);
+    --shadow-lg: 0 4px 10px rgba(27, 28, 38, 0.08), 0 20px 45px rgba(27, 28, 38, 0.14);
+  }
 }
 
 body {

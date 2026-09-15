@@ -1,5 +1,6 @@
 import styles from "./Nav.module.css";
 import GithubIcon from "./GithubIcon";
+import ThemeToggle from "./ThemeToggle";
 import { GITHUB_URL } from "@/lib/profile";
 
 const LINKS = [
@@ -35,6 +36,7 @@ export default function Nav() {
           >
             <GithubIcon />
           </a>
+          <ThemeToggle />
           {/* TODO: replace with the real resume PDF URL. */}
           <a href="#" className={`btn btn-primary ${styles.resume}`}>
             resume.pdf ↓
