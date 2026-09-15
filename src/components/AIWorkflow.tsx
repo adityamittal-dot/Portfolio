@@ -3,7 +3,7 @@ import styles from "./AIWorkflow.module.css";
 
 const POINTS = [
   "Code review & debugging: reviewing diffs, tracing regressions, and validating edge cases before merge.",
-  "Technical documentation: drafting and maintaining READMEs, API references, and onboarding docs.",
+  "AI-native product development: building tools with LLMs as core infrastructure, not a bolt-on feature — the direction most engineering orgs are hiring toward.",
   "Workflow automation: scripting routine engineering tasks — test scaffolding, data validation, deploy checks.",
   "Prompt & context engineering: structuring prompts and tool integrations for reliable, repeatable output.",
 ];
