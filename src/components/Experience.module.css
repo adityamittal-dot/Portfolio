@@ -1,15 +1,16 @@
-.experience {
+.section {
   padding: 44px var(--space-8);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 @media (max-width: 640px) {
-  .experience {
+  .section {
     padding: 40px var(--space-4);
   }
 }
 
-.heading {
-  margin: 0 0 var(--space-6);
+.header {
+  margin-bottom: var(--space-8);
 }
 
 .list {
@@ -19,38 +20,119 @@
 }
 
 .entry {
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--color-divider);
+  border: 1px solid var(--color-neutral-800);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color 0.15s ease;
 }
 
-.entry:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
+.entry:hover {
+  border-color: var(--color-accent-700);
 }
 
 .entryHead {
   display: flex;
   justify-content: space-between;
-  gap: var(--space-4);
   align-items: baseline;
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
-.role {
-  font-size: 16px;
+.identity {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.company {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--color-text);
+}
+
+.location {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-neutral-600);
+}
+
+.datesCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
 }
 
 .dates {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--color-neutral-600);
+  color: var(--color-neutral-500);
   white-space: nowrap;
 }
 
+.stat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: calc(var(--radius-md) * 0.75);
+  background: var(--color-accent-800);
+  color: var(--color-accent-100);
+  white-space: nowrap;
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.role {
+  font-size: 14px;
+  color: var(--color-accent-300);
+}
+
+.industry {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--color-neutral-600);
+}
+
 .description {
-  margin: var(--space-3) 0 0;
+  margin: 0;
   font-size: 13px;
   line-height: 1.75;
   color: var(--color-neutral-400);
+  max-width: 68ch;
+}
+
+.bullets {
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bullets li {
+  position: relative;
+  padding-left: var(--space-4);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-neutral-500);
+}
+
+.bullets li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent-600);
 }

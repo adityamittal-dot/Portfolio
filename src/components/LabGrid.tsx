@@ -21,7 +21,7 @@ export default function LabGrid() {
     <section id="lab" className={styles.section}>
       <div className={`${shared.container} ${shared.sectionHeader} ${styles.header}`}>
         <h2 className={shared.sectionHeading}>The lab</h2>
-        <span className={shared.cornerTag}>06 / PIXEL · 8-BIT</span>
+        <span className={shared.cornerTag}>07 / PIXEL · 8-BIT</span>
       </div>
       <div className={`${shared.container} ${styles.grid}`}>
         {PROJECTS.map((project) => (

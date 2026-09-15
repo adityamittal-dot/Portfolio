@@ -1,13 +1,5 @@
 .about {
   padding: 44px var(--space-8);
-  border-right: 1px solid var(--color-divider);
-}
-
-@media (max-width: 860px) {
-  .about {
-    border-right: none;
-    border-bottom: 1px solid var(--color-divider);
-  }
 }
 
 @media (max-width: 640px) {

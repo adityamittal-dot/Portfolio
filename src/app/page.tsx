@@ -26,9 +26,9 @@ export default function Home() {
         <section id="about" className={styles.aboutExperience}>
           <div className={`${shared.container} ${styles.aboutExperienceGrid}`}>
             <About />
-            <Experience />
           </div>
         </section>
+        <Experience />
         <LabGrid />
         <Contact />
       </main>
