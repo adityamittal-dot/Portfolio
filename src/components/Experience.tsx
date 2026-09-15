@@ -1,5 +1,6 @@
 import shared from "@/styles/shared.module.css";
 import styles from "./Experience.module.css";
+import CertificateViewer from "./CertificateViewer";
 
 const ROLES = [
   {
@@ -9,6 +10,7 @@ const ROLES = [
     role: "SDET Intern",
     dates: "Jun – Aug 2026",
     stat: "89 PRs · 7 repos",
+    hasCertificate: true,
     description:
       "Worked across Basepair's genomic-analysis platform and its customer-facing lab-report products, moving from test authoring into backend ownership and a cross-cutting code-quality initiative.",
     bullets: [
@@ -66,6 +68,7 @@ export default function Experience() {
                 <li key={bullet}>{bullet}</li>
               ))}
             </ul>
+            {item.hasCertificate && <CertificateViewer />}
           </article>
         ))}
       </div>

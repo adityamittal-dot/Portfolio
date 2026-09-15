@@ -1,44 +1,55 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./ThemeToggle.module.css";
 
 type Theme = "light" | "dark";
 
 function getSystemTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
+function getCurrentTheme(): Theme {
+  const attr = document.documentElement.getAttribute("data-theme");
+  return attr === "light" || attr === "dark" ? attr : getSystemTheme();
+}
+
+function syncButton(btn: HTMLButtonElement, theme: Theme) {
+  btn.setAttribute("aria-label", theme === "light" ? "Switch to dark mode" : "Switch to light mode");
+  btn.setAttribute("aria-pressed", String(theme === "light"));
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const initial: Theme = stored === "light" || stored === "dark" ? stored : getSystemTheme();
-    setTheme(initial);
+    const btn = buttonRef.current;
+    if (!btn) return;
+    syncButton(btn, getCurrentTheme());
+
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    const onSystemChange = () => syncButton(btn, getCurrentTheme());
+    mq.addEventListener("change", onSystemChange);
+    return () => mq.removeEventListener("change", onSystemChange);
   }, []);
 
-  useEffect(() => {
-    if (!theme) return;
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
   const toggle = () => {
-    setTheme((current) => {
-      const next: Theme = current === "light" ? "dark" : "light";
+    const next: Theme = getCurrentTheme() === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
       localStorage.setItem("theme", next);
-      return next;
-    });
+    } catch {}
+    const btn = buttonRef.current;
+    if (btn) syncButton(btn, next);
   };
 
   return (
     <button
+      ref={buttonRef}
       type="button"
       onClick={toggle}
       className={styles.toggle}
-      aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-      aria-pressed={theme === "light"}
+      aria-label="Toggle color theme"
     >
       <svg
         className={`${styles.icon} ${styles.sun}`}
