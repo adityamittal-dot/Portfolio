@@ -23,7 +23,7 @@ export default function WorkCard({ kicker, title, screenLabel, description, tags
       <div className={styles.body}>
         <div className={`card-kicker ${styles.kicker}`}>{kicker}</div>
         <h3 className="card-title">
-          <a href={href} className={styles.title}>
+          <a href={href} target="_blank" rel="noopener noreferrer" className={styles.title}>
             {title}
           </a>
         </h3>
