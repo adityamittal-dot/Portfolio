@@ -4,10 +4,14 @@
 :root {
   /* next/font/google supplies the actual @font-face rules and hashed
      family names via these CSS variables (set on <html> in layout.tsx);
-     point Nocturne's font roles at them instead of the CDN @import. */
-  --font-heading: var(--font-inter), system-ui, sans-serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+     point Nocturne's font roles at them instead of the CDN @import.
+     Geist + Geist Mono: same foundry, matched x-height and metrics, built
+     for developer-tool UI — reads cleaner than Inter/IBM Plex Mono at the
+     small sizes this design leans on, without adding any visual character
+     of its own. */
+  --font-heading: var(--font-geist), system-ui, sans-serif;
+  --font-body: var(--font-geist), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
 html, body {

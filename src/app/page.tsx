@@ -18,7 +18,7 @@ export default function Home() {
         Skip to content
       </a>
       <Nav />
-      <main id="main-content">
+      <main id="main-content" className={styles.main}>
         <Hero />
         <WorkGrid />
         <StackDiagram />

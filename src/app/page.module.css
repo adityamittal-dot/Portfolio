@@ -1,3 +1,16 @@
+/* Nav is position: fixed now (so it can fade out independently of scroll),
+   which pulls it out of document flow — reserve the space it used to
+   occupy so Hero doesn't start underneath it. */
+.main {
+  padding-top: 92px;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding-top: 84px;
+  }
+}
+
 .skipLink {
   position: absolute;
   top: -100%;

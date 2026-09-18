@@ -52,6 +52,18 @@
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--color-divider);
+  /* Stretch the wash/orb glow up behind the fixed nav instead of starting
+     at main's reserved-space boundary — pull the box up by that reserved
+     height, then pad it back down so .inner still lands in the same spot. */
+  margin-top: -92px;
+  padding-top: 92px;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    margin-top: -84px;
+    padding-top: 84px;
+  }
 }
 
 .wash {
