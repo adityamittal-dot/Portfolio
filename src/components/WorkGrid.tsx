@@ -15,9 +15,9 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Gemini API", variant: "neutral" },
       { label: "React · TypeScript", variant: "neutral" },
     ],
-    // Vercel deployment protection (SSO) is on for this project, so the
-    // live deploy isn't publicly reachable right now — link to the source.
-    href: "https://github.com/adityamittal-dot/XOR",
+    href: "https://mdevault-adityamittal-dots-projects.vercel.app",
+    image: "/work/medvault.png",
+    live: true,
   },
   {
     kicker: "02 · dev tooling · AI · Aug – Sep 2026",
@@ -47,9 +47,9 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Docker", variant: "neutral" },
       { label: "JWT", variant: "neutral" },
     ],
-    // Also behind Vercel SSO protection, and backend-only besides — point
-    // at the source rather than a dead end.
-    href: "https://github.com/adityamittal-dot/NexDev",
+    href: "https://nex-m7gjfpkrv-adityamittal-dots-projects.vercel.app",
+    image: "/work/nexdev.png",
+    live: true,
   },
   {
     kicker: "04 · meta · Sep 2026",
