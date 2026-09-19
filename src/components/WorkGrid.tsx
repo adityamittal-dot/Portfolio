@@ -15,7 +15,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Gemini API", variant: "neutral" },
       { label: "React · TypeScript", variant: "neutral" },
     ],
-    href: "https://mdevault-adityamittal-dots-projects.vercel.app",
+    href: "https://medvault-xor.vercel.app",
     image: "/work/medvault.png",
     live: true,
   },
