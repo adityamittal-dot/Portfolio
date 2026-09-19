@@ -15,7 +15,8 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Gemini API", variant: "neutral" },
       { label: "React · TypeScript", variant: "neutral" },
     ],
-    // Live deploy is currently 404ing — send visitors to the source instead.
+    // Vercel deployment protection (SSO) is on for this project, so the
+    // live deploy isn't publicly reachable right now — link to the source.
     href: "https://github.com/adityamittal-dot/XOR",
   },
   {
@@ -31,6 +32,8 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Gemini API", variant: "neutral" },
     ],
     href: "https://canopy-v7hb.onrender.com/analyze/",
+    image: "/work/canopy.png",
+    live: true,
   },
   {
     kicker: "03 · full stack · Apr – May 2026",
@@ -44,7 +47,8 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Docker", variant: "neutral" },
       { label: "JWT", variant: "neutral" },
     ],
-    // Backend-only — no UI to land visitors on, so point at the source.
+    // Also behind Vercel SSO protection, and backend-only besides — point
+    // at the source rather than a dead end.
     href: "https://github.com/adityamittal-dot/NexDev",
   },
   {
@@ -60,6 +64,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "CSS Modules", variant: "neutral" },
     ],
     href: "https://github.com/adityamittal-dot/Portfolio",
+    image: "/work/portfolio.png",
   },
 ];
 

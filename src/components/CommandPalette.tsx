@@ -9,8 +9,13 @@ interface Section {
   blurb: string;
 }
 
+const CAT_ART = ["    /\\_/\\", "   ( o.o )", "    > ^ <", "   /|   |\\", "  (_|   |_)"].join("\n");
+// Module scope, not component state — survives React 19 StrictMode's
+// dev-only double-mount, so the greeting below prints exactly once.
+let hasLoggedCat = false;
+
 const SECTIONS: Section[] = [
-  { id: "work", blurb: "Selected work — MedVault and NexDev." },
+  { id: "work", blurb: "Selected work — MedVault, Canopy, NexDev, and this site." },
   { id: "stack", blurb: "How the stack fits together." },
   { id: "lab", blurb: "The lab — small experiments and tools." },
   { id: "about", blurb: "About and experience." },
@@ -197,16 +202,13 @@ export default function CommandPalette() {
   const close = useCallback(() => setIsOpen(false), []);
 
   // A greeting for anyone who actually opens devtools — most people who do
-  // that on a portfolio are exactly the audience this site is for.
+  // that on a portfolio are exactly the audience this site is for. Guarded
+  // at module scope (not a ref) since React 19's StrictMode double-invokes
+  // effects in dev, which would otherwise print this twice per page load.
   useEffect(() => {
-    const cat = [
-      "    /\\_/\\",
-      "   ( o.o )",
-      "    > ^ <",
-      "   /|   |\\",
-      "  (_|   |_)",
-    ].join("\n");
-    console.log(`%c${cat}`, "color:#9184d9;font-family:monospace;font-size:12px;line-height:1.3;");
+    if (hasLoggedCat) return;
+    hasLoggedCat = true;
+    console.log(`%c${CAT_ART}`, "color:#9184d9;font-family:monospace;font-size:12px;line-height:1.3;");
     console.log(
       "%cLooking under the hood?",
       "color:#9184d9;font-family:monospace;font-size:14px;font-weight:600;",
