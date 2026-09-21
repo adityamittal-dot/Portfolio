@@ -31,20 +31,31 @@
 }
 
 .tile {
+  display: block;
   border: 1px solid var(--color-neutral-800);
   border-radius: var(--radius-md);
   padding: var(--space-6);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .tile:hover {
   border-color: var(--color-accent);
   background: var(--color-accent-900);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
-.tile:nth-child(2):hover {
+.tile:nth-child(3n+2):hover {
   border-color: var(--color-cyan);
   background: var(--color-cyan-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover {
+    transform: none;
+  }
 }
 
 .swatch {
@@ -56,7 +67,7 @@
   background-color: var(--color-neutral-900);
 }
 
-.tile:nth-child(2) .swatch {
+.tile:nth-child(3n+2) .swatch {
   background-image: linear-gradient(rgba(82, 224, 196, 0.18) 1px, transparent 1px),
     linear-gradient(90deg, rgba(82, 224, 196, 0.18) 1px, transparent 1px);
   background-size: 8px 8px;
