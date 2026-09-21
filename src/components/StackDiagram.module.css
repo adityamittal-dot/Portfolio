@@ -70,7 +70,7 @@
 
 .secondaryRow {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   margin-top: var(--space-6);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -78,7 +78,7 @@
 
 @media (max-width: 760px) {
   .secondaryRow {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

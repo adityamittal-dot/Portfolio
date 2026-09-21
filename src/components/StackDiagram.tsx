@@ -2,16 +2,23 @@ import shared from "@/styles/shared.module.css";
 import styles from "./StackDiagram.module.css";
 
 const PRIMARY = [
-  { label: "frontend", detail: "React · Next.js · shadCN\nTailwind · SCSS" },
-  { label: "backend", detail: "Django · DRF · Express\nJWT · OAuth 2.0 · Temporal" },
-  { label: "cloud", detail: "AWS S3 · Lambda · RDS\nEC2 · IAM · CloudWatch" },
+  { label: "frontend", detail: "React · Next.js · shadCN\nTailwind · EJS" },
+  { label: "backend", detail: "Django · DRF · Node/Express\nJWT · OAuth 2.0 · Temporal" },
+  { label: "cloud", detail: "AWS S3 · Lambda · RDS\nEC2 · IAM · CloudWatch\nVercel · Kubernetes" },
 ];
 
 const SECONDARY = [
-  { label: "languages", detail: "Python · JS (ES6+)\nTypeScript · C++ · SQL" },
+  { label: "languages", detail: "Python · JS (ES6+)\nTypeScript · C/C++ · SQL\nHTML5 · CSS3/SCSS" },
   { label: "databases", detail: "PostgreSQL\nMongoDB" },
-  { label: "testing", detail: "Playwright E2E · Sentry\nvisual regression" },
-  { label: "devops", detail: "Docker · CI/CD · Git\nnpm workspaces · Bash" },
+  { label: "testing", detail: "Playwright E2E · Sentry\nvisual regression\ntest automation arch." },
+  {
+    label: "devops",
+    detail: "Docker · Compose · Terraform\nGit · GitHub · CI/CD\nnpm workspaces · Postman\nLinux/Bash",
+  },
+  {
+    label: "aws",
+    detail: "STS · EKS · ECS · CloudFront\nSQS · SNS · DynamoDB\nAPI Gateway · VPC · ELB\nCloudFormation · CDK\nSecrets Mgr · Parameter Store",
+  },
 ];
 
 function DetailLines({ text }: { text: string }) {
