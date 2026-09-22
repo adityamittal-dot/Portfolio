@@ -29,8 +29,14 @@ export default function Contact() {
               github
             </a>{" "}
             ·{" "}
-            {/* TODO: replace with real LinkedIn profile URL */}
-            <a href="#">linkedin</a> · Noida, IN
+            <a
+              href="https://www.linkedin.com/in/aditya-mittal-084b91291/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              linkedin
+            </a>{" "}
+            · Noida, IN
           </span>
         </div>
         <span className={styles.signature}>built by hand · no template</span>
