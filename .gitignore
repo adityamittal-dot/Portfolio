@@ -42,7 +42,3 @@ next-env.d.ts
 
 # local Claude Code session state
 /.claude/
-
-# private, non-public documents served only via API routes at runtime —
-# never committed since this repo is public (see src/app/api/certificate)
-/src/private-assets/

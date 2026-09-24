@@ -1,32 +1,24 @@
+import Image from "next/image";
 import shared from "@/styles/shared.module.css";
 import styles from "./LabGrid.module.css";
 
 const PROJECTS = [
   {
-    name: "pdf-diff",
-    description: "Shared PDF-comparison utilities as a reusable npm workspace package.",
-  },
-  {
-    name: "bam-gate",
-    description: "Pre-analysis validation for genomic sequencing files.",
-  },
-  {
-    name: "batch-calls",
-    description: "96 sequential REST calls collapsed into 2 queries.",
-  },
-  {
     name: "x-flow",
     description: "Turns real GitHub activity into build-in-public posts, drafted live and published via Buffer.",
+    image: "/lab/x-flow.png",
   },
   {
     name: "salvo-oss",
     description: "Zero-auth job discovery, fit-scoring, and resume tailoring — open-sourced and customizable.",
     href: "https://github.com/adityamittal-dot/salvo-oss",
+    image: "/lab/salvo-oss.png",
   },
   {
     name: "dsa-sheet-cpp",
     description: "A 291-problem, 12-week DSA tracker with curated resources and per-problem notes.",
     href: "https://github.com/adityamittal-dot/DSA-Sheet-Cpp",
+    image: "/lab/dsa-sheet-cpp.png",
   },
 ];
 
@@ -47,13 +39,29 @@ export default function LabGrid() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.swatch} />
+              <div className={styles.swatch}>
+                <Image
+                  src={project.image}
+                  alt={`${project.name} — cover art`}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 33vw"
+                  className={styles.swatchImage}
+                />
+              </div>
               <div className={styles.name}>{project.name}</div>
               <p className={styles.description}>{project.description}</p>
             </a>
           ) : (
             <div key={project.name} className={styles.tile}>
-              <div className={styles.swatch} />
+              <div className={styles.swatch}>
+                <Image
+                  src={project.image}
+                  alt={`${project.name} — cover art`}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 33vw"
+                  className={styles.swatchImage}
+                />
+              </div>
               <div className={styles.name}>{project.name}</div>
               <p className={styles.description}>{project.description}</p>
             </div>
