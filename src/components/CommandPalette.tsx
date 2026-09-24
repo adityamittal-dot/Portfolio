@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./CommandPalette.module.css";
-import { GITHUB_API_URL, GITHUB_URL } from "@/lib/profile";
+import { EMAIL, GITHUB_API_URL, GITHUB_URL, LINKEDIN_URL, PHONE_DISPLAY } from "@/lib/profile";
 
 interface Section {
   id: string;
@@ -19,7 +19,7 @@ const SECTIONS: Section[] = [
   { id: "stack", blurb: "How the stack fits together." },
   { id: "lab", blurb: "The lab — small experiments and tools." },
   { id: "about", blurb: "About and experience." },
-  { id: "contact", blurb: "Reach out: adityamittal529@gmail.com" },
+  { id: "contact", blurb: `Reach out: ${EMAIL}` },
 ];
 
 interface CommandResult {
@@ -129,7 +129,7 @@ const COMMANDS: Command[] = [
   {
     name: "resume",
     hint: "open the resume",
-    run: () => ({ output: "Resume isn't linked yet — email adityamittal529@gmail.com for a copy." }),
+    run: () => ({ output: "Resume isn't linked yet — email " + EMAIL + " for a copy." }),
   },
   {
     name: "github",
@@ -142,7 +142,7 @@ const COMMANDS: Command[] = [
     aliases: ["linkedin"],
     hint: "where else to find me",
     run: () => ({
-      output: `${GITHUB_URL}\nLinkedIn link is coming soon — reach adityamittal529@gmail.com or +91 78368 50977 in the meantime.\nRun 'github' for live profile stats.`,
+      output: `${GITHUB_URL}\n${LINKEDIN_URL}\nOr reach me directly: ${EMAIL} · ${PHONE_DISPLAY}\nRun 'github' for live profile stats.`,
     }),
   },
   {
