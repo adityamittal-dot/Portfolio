@@ -20,7 +20,7 @@
 
 .matrix {
   width: 100%;
-  min-width: 620px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
 }
@@ -46,7 +46,7 @@
 }
 
 .colHead {
-  width: 13%;
+  width: 10%;
   text-align: center !important;
 }
 
@@ -144,7 +144,10 @@
 .matrix:has([data-col="1"]:hover) [data-col="1"],
 .matrix:has([data-col="2"]:hover) [data-col="2"],
 .matrix:has([data-col="3"]:hover) [data-col="3"],
-.matrix:has([data-col="4"]:hover) [data-col="4"] {
+.matrix:has([data-col="4"]:hover) [data-col="4"],
+.matrix:has([data-col="5"]:hover) [data-col="5"],
+.matrix:has([data-col="6"]:hover) [data-col="6"],
+.matrix:has([data-col="7"]:hover) [data-col="7"] {
   background: var(--surface);
 }
 
@@ -218,6 +221,34 @@
   font-size: 15px;
   line-height: 1.55;
   color: var(--ink-2);
+}
+
+.toolGroups {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.toolGroup {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.toolGroup:first-child {
+  padding-top: 0;
+}
+
+.toolGroup dt {
+  padding-top: 4px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.toolGroup dd {
+  margin: 0;
 }
 
 .toolboxList {

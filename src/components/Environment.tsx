@@ -87,18 +87,27 @@ export default function Environment() {
 
           <div className={styles.toolbox}>
             <div>
-              <h3 className={styles.toolboxTitle}>Also in the toolbox</h3>
+              <h3 className={styles.toolboxTitle}>Next up in the toolbox</h3>
               <p className={styles.toolboxNote}>
-                Used and studied, with no public project here to point at yet.
+                Learned and practised hands-on, and lined up for the projects I build next.
               </p>
             </div>
-            <ul className={styles.toolboxList}>
-              {TOOLBOX.map((tool) => (
-                <li key={tool} className="tag">
-                  {tool}
-                </li>
+            <dl className={styles.toolGroups}>
+              {TOOLBOX.map((group) => (
+                <div key={group.group} className={styles.toolGroup}>
+                  <dt className="mono">{group.group}</dt>
+                  <dd>
+                    <ul className={styles.toolboxList}>
+                      {group.tools.map((tool) => (
+                        <li key={tool} className="tag">
+                          {tool}
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
               ))}
-            </ul>
+            </dl>
           </div>
 
           <aside className={styles.notes} aria-labelledby="ai-title">

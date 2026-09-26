@@ -41,7 +41,7 @@ The personal portfolio of Aditya Mittal, a B.Tech CSE student at Jaypee Universi
 ## Evidence on Hand
 
 - Work: MedVault, Canopy and NexDev (live deploys), plus the portfolio itself, each with a screenshot in `public/work/`.
-- Lab: x-flow, salvo-oss and dsa-sheet-cpp, with cover art in `public/lab/`.
+- Lab: x-autopilot, lorevid, salvo-oss and dsa-sheet-cpp, with cover art in `public/lab/` (the x-autopilot and lorevid covers are authored SVG line art matching the originals).
 - Experience:
   - Basepair, SDET Intern, Jun–Aug 2026: 89 PRs across 7 repos, Playwright E2E, 100+ BLOCKER/HIGH SonarQube findings resolved, an OAuth token-refresh race condition, and 96 sequential API calls reduced to 2.
   - Spelll Production, Frontend Intern, Jun–Jul 2024.

@@ -190,6 +190,20 @@ export interface LabItem {
 
 export const LAB: LabItem[] = [
   {
+    name: "x-autopilot",
+    description:
+      "Runs an X account like a publication: daily takes from real AI and dev news, build-in-public posts from real commits, published by GitHub Actions for $0.",
+    href: "https://github.com/adityamittal-dot/x-autopilot",
+    image: "/lab/x-autopilot.webp",
+  },
+  {
+    name: "lorevid",
+    description:
+      "A narrated \u201cYour Life as a ___\u201d history video every day: Claude writes and reviews the script, GitHub Actions paints, voices, edits and uploads it.",
+    href: "https://github.com/adityamittal-dot/lorevid",
+    image: "/lab/lorevid.webp",
+  },
+  {
     name: "salvo-oss",
     description: "Zero-auth job discovery, fit-scoring and resume tailoring, open-sourced and customizable.",
     href: "https://github.com/adityamittal-dot/salvo-oss",
@@ -201,12 +215,6 @@ export const LAB: LabItem[] = [
     href: "https://github.com/adityamittal-dot/DSA-Sheet-Cpp",
     image: "/lab/dsa-sheet-cpp.webp",
   },
-  {
-    name: "x-flow",
-    description: "Turns real GitHub activity into build-in-public posts, drafted live and published via Buffer.",
-    image: "/lab/x-flow.webp",
-    skipReason: "no public repo yet",
-  },
 ];
 
 /** The columns of the coverage matrix: everything on this page that shows a skill in use. */
@@ -215,6 +223,8 @@ export const COVERAGE_COLUMNS: { id: string; label: string }[] = [
   { id: "canopy", label: "Canopy" },
   { id: "nexdev", label: "NexDev" },
   { id: "portfolio", label: "Portfolio" },
+  { id: "x-autopilot", label: "x-autopilot" },
+  { id: "lorevid", label: "lorevid" },
 ];
 
 export interface CoverageRow {
@@ -235,15 +245,18 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
       { skill: "React", in: ["medvault", "nexdev", "portfolio"] },
       { skill: "TypeScript", in: ["medvault", "portfolio"] },
       { skill: "Next.js", in: ["portfolio"] },
+      { skill: "JavaScript", in: ["nexdev", "x-autopilot"] },
+      { skill: "HTML & CSS Modules", in: ["portfolio"] },
     ],
   },
   {
     layer: "backend",
     rows: [
-      { skill: "Python", in: ["medvault", "canopy"] },
+      { skill: "Python", in: ["medvault", "canopy", "lorevid"] },
       { skill: "Django", in: ["medvault", "canopy"] },
       { skill: "Django REST Framework", in: ["medvault"] },
-      { skill: "Node / Express", in: ["nexdev"] },
+      { skill: "Node.js", in: ["nexdev", "x-autopilot"] },
+      { skill: "Express", in: ["nexdev"] },
       { skill: "JWT auth", in: ["medvault", "nexdev"] },
     ],
   },
@@ -254,6 +267,9 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
       { skill: "Schema-constrained output", in: ["medvault"] },
       { skill: "Grounded chat", in: ["canopy"] },
       { skill: "tree-sitter parsing", in: ["canopy"] },
+      { skill: "Claude Code, headless", in: ["x-autopilot", "lorevid"] },
+      { skill: "Text-to-speech (Kokoro)", in: ["lorevid"] },
+      { skill: "AI image generation", in: ["lorevid"] },
     ],
   },
   {
@@ -269,6 +285,9 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
       { skill: "Docker", in: ["nexdev"] },
       { skill: "Vercel", in: ["medvault", "nexdev"] },
       { skill: "Static export + CDN", in: ["portfolio"] },
+      { skill: "GitHub Actions pipelines", in: ["x-autopilot", "lorevid"] },
+      { skill: "ffmpeg video rendering", in: ["lorevid"] },
+      { skill: "Third-party APIs (YouTube, Buffer)", in: ["x-autopilot", "lorevid"] },
     ],
   },
   {
@@ -280,14 +299,21 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
   },
 ];
 
-/** Also in the toolbox: used and studied, with no public project on this page to point at yet. */
-export const TOOLBOX: string[] = [
-  "Playwright E2E", "SonarQube", "OAuth 2.0", "AWS S3",
-  "JavaScript (ES6+)", "C/C++", "SQL", "HTML5", "CSS3/SCSS", "shadcn/ui", "Tailwind", "EJS", "Temporal",
-  "Claude API", "Claude Code", "MCP", "Sentry", "Visual regression", "AWS Lambda", "RDS", "EC2", "IAM",
-  "CloudWatch", "EKS", "ECS", "CloudFront", "SQS", "SNS", "DynamoDB", "API Gateway", "VPC", "ELB",
-  "CloudFormation", "CDK", "Secrets Manager", "Parameter Store", "Kubernetes", "Terraform", "Compose",
-  "CI/CD", "npm workspaces", "Postman", "Linux/Bash",
+/** Studied and practised, and queued for upcoming projects: nothing public on this page uses them yet. */
+export const TOOLBOX: { group: string; tools: string[] }[] = [
+  { group: "languages", tools: ["C/C++", "SQL"] },
+  { group: "frontend", tools: ["shadcn/ui", "Tailwind", "SCSS", "EJS"] },
+  { group: "backend", tools: ["OAuth 2.0", "Temporal"] },
+  { group: "ai", tools: ["Claude API", "Model Context Protocol"] },
+  { group: "testing", tools: ["Playwright E2E", "SonarQube", "Sentry", "Visual regression"] },
+  {
+    group: "aws",
+    tools: [
+      "S3", "Lambda", "RDS", "EC2", "IAM", "CloudWatch", "EKS", "ECS", "CloudFront", "SQS", "SNS",
+      "DynamoDB", "API Gateway", "VPC", "ELB", "CloudFormation", "CDK", "Secrets Manager", "Parameter Store",
+    ],
+  },
+  { group: "devops", tools: ["Kubernetes", "Terraform", "Docker Compose", "CI/CD", "npm workspaces", "Postman", "Linux/Bash"] },
 ];
 
 export const AI_PRACTICE: { title: string; body: string }[] = [

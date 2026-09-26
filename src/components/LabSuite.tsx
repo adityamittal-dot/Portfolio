@@ -18,7 +18,12 @@ export default function LabSuite() {
           file="lab.spec.ts"
           result={
             <>
-              {passed} passed, <span className={styles.skipCount}>{skipped} skipped</span>
+              {passed} passed
+              {skipped > 0 && (
+                <>
+                  , <span className={styles.skipCount}>{skipped} skipped</span>
+                </>
+              )}
             </>
           }
         />
