@@ -1,0 +1,11 @@
+{
+  // Static-only deploy: Cloudflare serves out/ (from `next build` with
+  // output: "export") straight from its CDN — no Worker script, no server.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aditya-mittal",
+  "compatibility_date": "2026-09-25",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
