@@ -1,33 +1,277 @@
 @import "tailwindcss";
-@import "../styles/nocturne.css";
 
+/* ─── Report paper ──────────────────────────────────────────────────────────
+   The page is a test report. Ink on report paper, hairline rules between
+   rows, and exactly one saturated signal: pass-green, spent only on marks
+   that prove something. Amber marks a real skipped state and nothing else.
+
+   Light is the base (the reading scene is a desk, in daylight, with a
+   report open); dark is the same report in a dark room, not a different
+   brand. Every text token is checked for WCAG AA against --bg and --surface. */
 :root {
-  /* next/font/google supplies the actual @font-face rules and hashed
-     family names via these CSS variables (set on <html> in layout.tsx);
-     point Nocturne's font roles at them instead of the CDN @import.
-     Geist + Geist Mono: same foundry, matched x-height and metrics, built
-     for developer-tool UI — reads cleaner than Inter/IBM Plex Mono at the
-     small sizes this design leans on, without adding any visual character
-     of its own. */
-  --font-heading: var(--font-geist), system-ui, sans-serif;
-  --font-body: var(--font-geist), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --bg: #f1f2ee;
+  --surface: #fafaf8;
+  --ink: #15171a;
+  --ink-2: #464b52;
+  --ink-3: #5e636b;
+  --rule: #d9dbd5;
+  --rule-strong: #b8bbb4;
+  --pass: #157a3a;
+  --pass-bg: #dcefe1;
+  --pass-rule: #9fd1ae;
+  --skip: #9a4d0b;
+  --skip-bg: #f5e7d4;
+  --shadow: 0 1px 2px rgb(21 23 26 / 0.06), 0 8px 24px -12px rgb(21 23 26 / 0.18);
+  --shadow-lg: 0 2px 6px rgb(21 23 26 / 0.08), 0 24px 60px -20px rgb(21 23 26 / 0.35);
+  --scrim: rgb(21 23 26 / 0.42);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, "SFMono-Regular", monospace;
+  --font-numeral: var(--font-martian), ui-monospace, monospace;
+  /* Martian Mono is set narrow for identifiers so a file name sits at the
+     same visual weight as the prose around it. */
+  --mono-stretch: 75%;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --gutter: clamp(16px, 4vw, 40px);
+  --measure: 1200px;
+  --toolbar-h: 60px;
+  --toolbar-total: 60px;
+
+  color-scheme: light;
 }
 
-html, body {
-  min-height: 100%;
+:root[data-theme="dark"] {
+  --bg: #111315;
+  --surface: #171a1c;
+  --ink: #e8eae5;
+  --ink-2: #b4b9b1;
+  --ink-3: #8f948d;
+  --rule: #272b2e;
+  --rule-strong: #394044;
+  --pass: #52c77a;
+  --pass-bg: #13301f;
+  --pass-rule: #24583a;
+  --skip: #e3a458;
+  --skip-bg: #3a2a16;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.45), 0 24px 60px -20px rgb(0 0 0 / 0.75);
+  --scrim: rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111315;
+    --surface: #171a1c;
+    --ink: #e8eae5;
+    --ink-2: #b4b9b1;
+    --ink-3: #8f948d;
+    --rule: #272b2e;
+    --rule-strong: #394044;
+    --pass: #52c77a;
+    --pass-bg: #13301f;
+    --pass-rule: #24583a;
+    --skip: #e3a458;
+    --skip-bg: #3a2a16;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.45), 0 24px 60px -20px rgb(0 0 0 / 0.75);
+    --scrim: rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+@media (max-width: 860px) {
+  :root {
+    --toolbar-total: 104px;
+  }
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+html {
+  scroll-padding-top: calc(var(--toolbar-total) + 24px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
-  background-color: var(--color-bg);
-  background-image: var(--dot-grid-image);
-  background-size: var(--dot-grid-size) var(--dot-grid-size);
-  color: var(--color-text);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* ─── Browser surfaces, themed from the palette ────────────────────────── */
+::selection {
+  background: var(--pass-bg);
+  color: var(--ink);
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pass);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+input,
+textarea {
+  caret-color: var(--pass);
+}
+
+html {
+  scrollbar-color: var(--rule-strong) var(--bg);
+  scrollbar-width: thin;
+}
+
+/* ─── Shared primitives ────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: calc(var(--measure) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.mono,
+kbd,
+code {
+  font-family: var(--font-mono);
+  font-stretch: var(--mono-stretch);
+  letter-spacing: -0.01em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Buttons: one family, two weights. Pressing gives a slight squash, so the
+   control feels like it heard you. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease,
+    transform 160ms var(--ease-out);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button svg {
+  flex: none;
+}
+
+.button-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.button-primary:hover {
+  background: color-mix(in srgb, var(--ink) 86%, var(--bg));
+}
+
+.button-secondary {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+  background: transparent;
+}
+
+.button-secondary:hover {
+  background: var(--surface);
+  border-color: var(--ink-3);
+}
+
+/* @tag chips, the form test reports use to label cases. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-stretch: var(--mono-stretch);
+  font-size: 11.5px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

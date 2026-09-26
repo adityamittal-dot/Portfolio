@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./CommandPalette.module.css";
 import { EMAIL, GITHUB_API_URL, GITHUB_URL, LINKEDIN_URL, PHONE_DISPLAY } from "@/lib/profile";
+import { runResults } from "@/lib/content";
+
+/** Dispatched on window by any on-page control that should open the console. */
+export const OPEN_CONSOLE_EVENT = "open-console";
 
 interface Section {
   id: string;
@@ -15,12 +19,40 @@ const CAT_ART = ["    /\\_/\\", "   ( o.o )", "    > ^ <", "   /|   |\\", "  (_|
 let hasLoggedCat = false;
 
 const SECTIONS: Section[] = [
-  { id: "work", blurb: "Selected work — MedVault, Canopy, NexDev, and this site." },
-  { id: "stack", blurb: "How the stack fits together." },
-  { id: "lab", blurb: "The lab — small experiments and tools." },
-  { id: "about", blurb: "About and experience." },
-  { id: "contact", blurb: `Reach out: ${EMAIL}` },
+  { id: "work", blurb: "Work: MedVault, Canopy, NexDev, and this site." },
+  { id: "stack", blurb: "Stack: what the work runs on, and where it's proven." },
+  { id: "lab", blurb: "Lab: small tools and experiments." },
+  { id: "experience", blurb: "Experience: Basepair and Spelll Production." },
+  { id: "about", blurb: "About." },
+  { id: "contact", blurb: `Contact: ${EMAIL}` },
 ];
+
+function renderRun(): ReactNode {
+  const run = runResults();
+  return (
+    <>
+      {run.suites.map((suite) => (
+        <div key={suite.name}>
+          <div className={styles.dirName}>{suite.name}.ts</div>
+          {suite.cases.map((c) => (
+            <div key={c.name}>
+              {"  "}
+              <span className={c.status === "passed" ? styles.pass : styles.skip}>
+                {c.status === "passed" ? "✓" : "-"}
+              </span>{" "}
+              {c.name}
+              {c.status === "skipped" ? " (skipped)" : ""}
+            </div>
+          ))}
+        </div>
+      ))}
+      <div className={styles.summaryLine}>
+        <span className={styles.pass}>{run.passed} passed</span>, <span className={styles.skip}>{run.skipped} skipped</span>
+        {` (${run.total} tests, ${run.suites.length} suites)`}
+      </div>
+    </>
+  );
+}
 
 interface CommandResult {
   output?: ReactNode;
@@ -51,11 +83,11 @@ async function fetchGithubProfile(): Promise<CommandResult> {
   try {
     response = await fetch(GITHUB_API_URL);
   } catch {
-    return { output: "github: request failed — check your connection and try again." };
+    return { output: "github: request failed. Check your connection and try again." };
   }
 
   if (response.status === 403 || response.status === 429) {
-    return { output: `github: rate limited by the GitHub API — try again shortly, or visit ${GITHUB_URL}` };
+    return { output: `github: rate limited by the GitHub API. Try again shortly, or visit ${GITHUB_URL}` };
   }
   if (!response.ok) {
     return { output: `github: profile fetch failed (${response.status}).` };
@@ -95,7 +127,7 @@ const COMMANDS: Command[] = [
   })),
   {
     name: "cd",
-    hint: "cd <section> — jump to a section",
+    hint: "cd <section>: jump to a section",
     run: (args) => {
       const target = args[0];
       if (!target) return { output: "cd: missing operand" };
@@ -118,7 +150,7 @@ const COMMANDS: Command[] = [
     hint: "who's behind this site",
     run: () => ({
       output:
-        "Aditya Mittal — full stack engineer who makes AI features hold up.\nB.Tech CSE @ Jaypee University · Noida, India.",
+        "Aditya Mittal, full-stack engineer who makes AI features hold up.\nB.Tech CSE at Jaypee University, Noida, India. Open to internships.",
     }),
   },
   {
@@ -127,9 +159,22 @@ const COMMANDS: Command[] = [
     run: () => ({ output: "Python · TypeScript · React · Next.js · Django · AWS · Playwright" }),
   },
   {
+    name: "test",
+    aliases: ["npm test", "run"],
+    hint: "run the portfolio's test suites",
+    run: () => ({ output: renderRun() }),
+  },
+  {
     name: "resume",
-    hint: "open the resume",
-    run: () => ({ output: "Resume isn't linked yet — email " + EMAIL + " for a copy." }),
+    aliases: ["cv"],
+    hint: "download the resume (PDF)",
+    run: () => {
+      const link = document.createElement("a");
+      link.href = "/aditya-mittal-resume.pdf";
+      link.download = "Aditya Mittal - Resume.pdf";
+      link.click();
+      return { output: "Downloading aditya-mittal-resume.pdf" };
+    },
   },
   {
     name: "github",
@@ -149,7 +194,7 @@ const COMMANDS: Command[] = [
     name: "sudo",
     hint: "",
     run: () => ({
-      output: "Nice try — you're not in the sudoers file. This incident has been reported (to nobody).",
+      output: "Nice try. You're not in the sudoers file. This incident has been reported (to nobody).",
     }),
   },
   {
@@ -208,14 +253,14 @@ export default function CommandPalette() {
   useEffect(() => {
     if (hasLoggedCat) return;
     hasLoggedCat = true;
-    console.log(`%c${CAT_ART}`, "color:#9184d9;font-family:monospace;font-size:12px;line-height:1.3;");
+    console.log(`%c${CAT_ART}`, "color:#2f9e57;font-family:monospace;font-size:12px;line-height:1.3;");
     console.log(
       "%cLooking under the hood?",
-      "color:#9184d9;font-family:monospace;font-size:14px;font-weight:600;",
+      "color:#2f9e57;font-family:monospace;font-size:14px;font-weight:600;",
     );
     console.log(
-      "%cPress / anywhere on this page for a command palette. Try 'help'.",
-      "color:#b2b6ca;font-family:monospace;font-size:12px;",
+      "%cPress / anywhere on this page for the command console. Try 'npm test'.",
+      "color:#8f948d;font-family:monospace;font-size:12px;",
     );
   }, []);
 
@@ -245,7 +290,21 @@ export default function CommandPalette() {
   }, [isOpen, close]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
+    const open = () => setIsOpen(true);
+    window.addEventListener(OPEN_CONSOLE_EVENT, open);
+    return () => window.removeEventListener(OPEN_CONSOLE_EVENT, open);
+  }, []);
+
+  // Return focus to whatever opened the console when it closes.
+  const openerRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (isOpen) {
+      openerRef.current = document.activeElement as HTMLElement | null;
+      inputRef.current?.focus();
+    } else if (openerRef.current) {
+      openerRef.current.focus?.();
+      openerRef.current = null;
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -288,10 +347,10 @@ export default function CommandPalette() {
     setInputValue("");
 
     const [name, ...args] = trimmed.split(/\s+/);
-    const command = findCommand(name);
+    const command = findCommand(trimmed) ?? findCommand(name);
 
     if (!command) {
-      pushEntry(trimmed, `command not found: ${name} — type 'help' for a list.`);
+      pushEntry(trimmed, `command not found: ${name}. Type 'help' for a list.`);
       return;
     }
 
@@ -301,7 +360,7 @@ export default function CommandPalette() {
       const entryId = pushEntry(trimmed, "fetching…");
       result
         .then((resolved) => applyResult(entryId, resolved))
-        .catch(() => updateEntry(entryId, `${name}: request failed — try again in a moment.`));
+        .catch(() => updateEntry(entryId, `${name}: request failed. Try again in a moment.`));
       return;
     }
 
@@ -348,20 +407,6 @@ export default function CommandPalette() {
 
   return (
     <>
-      <button
-        type="button"
-        className={styles.trigger}
-        onClick={() => setIsOpen(true)}
-        aria-label="Open command palette"
-      >
-        <span>
-          type <span className={styles.triggerKey}>/</span> to explore
-        </span>
-        <span className={styles.triggerCursor} aria-hidden="true">
-          ▌
-        </span>
-      </button>
-
       {isOpen && (
         <div
           className={styles.backdrop}
@@ -378,7 +423,8 @@ export default function CommandPalette() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleInputKeyDown}
-                placeholder="type a command… try 'help'"
+                placeholder="Type a command, or try 'npm test'"
+                aria-label="Command"
                 spellCheck={false}
                 autoComplete="off"
               />
@@ -398,8 +444,11 @@ export default function CommandPalette() {
             )}
 
             <div className={styles.footer}>
-              <span>↑↓ history · Tab autocomplete · Esc close</span>
-              <span>try &apos;help&apos;</span>
+              <span>
+                <kbd>↑</kbd>
+                <kbd>↓</kbd> history <kbd>Tab</kbd> complete <kbd>Esc</kbd> close
+              </span>
+              <span>help lists every command</span>
             </div>
           </div>
         </div>

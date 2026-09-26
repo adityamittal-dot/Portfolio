@@ -1,40 +1,17 @@
-/* Nav is position: fixed now (so it can fade out independently of scroll),
-   which pulls it out of document flow — reserve the space it used to
-   occupy so Hero doesn't start underneath it. */
-.main {
-  padding-top: 92px;
-}
-
-@media (max-width: 640px) {
-  .main {
-    padding-top: 84px;
-  }
-}
-
 .skipLink {
   position: absolute;
   top: -100%;
-  left: var(--space-4);
+  left: var(--gutter);
   z-index: 100;
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-accent);
-  color: var(--color-bg);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
-  transition: top 0.15s ease;
 }
 
 .skipLink:focus-visible {
-  top: var(--space-4);
-}
-
-.aboutExperience {
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.aboutExperienceGrid {
-  display: grid;
-  grid-template-columns: 1fr;
+  top: 12px;
 }

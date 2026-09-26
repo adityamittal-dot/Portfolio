@@ -1,0 +1,458 @@
+/* ─── The run ───────────────────────────────────────────────────────────
+   One clock drives the page's one authored moment: on load, the test cases
+   fill the progress bar one tick at a time, the totals count up with them,
+   and then the three headline assertions go from pending to passed on the
+   same beat. It plays once. Everything renders in its passed state by
+   default; with reduced motion, or before CSS loads, the run is simply
+   already complete. */
+.section {
+  --tick: 90ms;
+  --run-start: 250ms;
+  padding-block: clamp(32px, 6vw, 72px) clamp(40px, 6vw, 72px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+/* ─── Copy ── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: 14px;
+  background: var(--pass-bg);
+  box-shadow: inset 0 0 0 1px var(--pass-rule);
+  color: var(--pass);
+  font-weight: 500;
+}
+
+/* A real availability flag, so it gets the one semantic dot on the page. */
+.openDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.statusMeta {
+  white-space: nowrap;
+}
+
+.name {
+  font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 650;
+}
+
+.thesis {
+  margin-top: 16px;
+  max-width: 22ch;
+  font-size: clamp(1.375rem, 1.05rem + 1.3vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-weight: 450;
+}
+
+.sub {
+  margin-top: 16px;
+  max-width: 48ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* ─── Run summary panel ── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--rule), var(--shadow);
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panelTitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.panelMeta {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.totals {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+}
+
+.total {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--pass);
+}
+
+.totalSkipped {
+  color: var(--skip);
+}
+
+.totalLabel {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@property --run-passed {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --run-skipped {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+/* The totals are CSS counters so they can count up with the bar and still
+   be the right number with no JavaScript at all; the real figure is also in
+   the DOM for assistive tech. */
+.count {
+  font-family: var(--font-numeral);
+  font-variation-settings: "wdth" 112.5;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 2rem + 1.6vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.countPassed {
+  counter-reset: run var(--run-passed);
+}
+
+.countSkipped {
+  counter-reset: run var(--run-skipped);
+}
+
+.count::after {
+  content: counter(run);
+}
+
+.bar {
+  display: flex;
+  gap: 3px;
+  height: 10px;
+}
+
+.segment {
+  flex: 1;
+  border-radius: 2px;
+  background: var(--pass);
+  transform-origin: left center;
+}
+
+.segmentSkipped {
+  background: var(--skip);
+}
+
+.suites {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.suite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  font-size: 13px;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 150ms ease;
+}
+
+.suite:hover {
+  color: var(--ink);
+}
+
+.suiteResult {
+  color: var(--pass);
+}
+
+@property --suite-n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.suiteCount {
+  counter-reset: suite var(--suite-n);
+}
+
+.suiteCount::after {
+  content: counter(suite);
+}
+
+.suiteSkip {
+  color: var(--skip);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.github {
+  font-size: 12px;
+  color: var(--ink-3);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.github:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+/* ─── Headline assertions ── */
+.assertions {
+  list-style: none;
+  margin: clamp(40px, 6vw, 64px) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.assertion {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 13rem) minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(16px, 3vw, 40px);
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.assertionMark {
+  align-self: center;
+}
+
+.numeral {
+  font-family: var(--font-numeral);
+  font-variation-settings: "wdth" 112.5;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.claim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 56ch;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.source {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-3);
+  letter-spacing: 0;
+}
+
+.evidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ink-3);
+  transition: color 150ms ease, transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .assertion:hover .evidence {
+    color: var(--pass);
+    transform: translateY(2px);
+  }
+
+  .assertion:hover .numeral {
+    color: var(--pass);
+  }
+}
+
+.numeral {
+  transition: color 200ms ease;
+}
+
+/* ─── The run, played once ── */
+@keyframes segmentFill {
+  from {
+    transform: scaleX(0);
+    opacity: 0.35;
+  }
+}
+
+@keyframes countPassed {
+  from {
+    --run-passed: 0;
+  }
+}
+
+@keyframes countSkipped {
+  from {
+    --run-skipped: 0;
+  }
+}
+
+@keyframes suiteCount {
+  from {
+    --suite-n: 0;
+  }
+}
+
+@keyframes markPass {
+  from {
+    background: transparent;
+    color: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+    transform: scale(0.86);
+  }
+}
+
+@keyframes rowSettle {
+  from {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .segment {
+    animation: segmentFill calc(var(--tick) * 1.4) var(--ease-out) backwards;
+    animation-delay: calc(var(--run-start) + var(--i) * var(--tick));
+  }
+
+  .countPassed {
+    animation: countPassed calc(var(--tick) * var(--total)) linear backwards;
+    animation-delay: var(--run-start);
+  }
+
+  .countSkipped {
+    animation: countSkipped var(--tick) linear backwards;
+    animation-delay: calc(var(--run-start) + var(--tick) * (var(--total) - 1));
+  }
+
+  .suiteCount {
+    animation: suiteCount calc(var(--tick) * var(--len)) linear backwards;
+    animation-delay: calc(var(--run-start) + var(--start) * var(--tick));
+  }
+
+  .assertion {
+    animation: rowSettle 420ms var(--ease-out) backwards;
+    animation-delay: calc(var(--run-start) + var(--i) * var(--tick) + 120ms);
+  }
+
+  .assertionMark {
+    animation: markPass 320ms var(--ease-out) backwards;
+    animation-delay: calc(var(--run-start) + var(--i) * var(--tick) * 2.2 + 200ms);
+  }
+}
+
+/* ─── Narrow ── */
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .thesis {
+    max-width: 26ch;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .ctas {
+    width: 100%;
+  }
+
+  .ctas a {
+    flex: 1 1 auto;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .assertion {
+    grid-template-columns: 28px minmax(0, 1fr);
+    row-gap: 10px;
+    padding: 20px 0;
+  }
+
+  .numeral {
+    grid-column: 2;
+  }
+
+  .claim {
+    grid-column: 2;
+  }
+
+  .assertionMark {
+    grid-row: 1;
+  }
+}

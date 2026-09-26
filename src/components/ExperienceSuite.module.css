@@ -1,0 +1,120 @@
+.section {
+  padding-block: clamp(56px, 7vw, 96px) 0;
+}
+
+.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* A ledger, not a card stack: the facts about each role pin in a narrow
+   column while the work itself reads down the wide one. */
+.role {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 80px);
+  padding-block: clamp(32px, 4vw, 48px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.side {
+  align-self: start;
+  position: sticky;
+  top: calc(var(--toolbar-h) + 24px);
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.companyName {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.facts {
+  margin: 20px 0 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.facts div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.facts dt {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-3);
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+.stat {
+  color: var(--pass) !important;
+  font-weight: 500;
+}
+
+.main {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.description {
+  max-width: 62ch;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  max-width: 72ch;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.stepMark {
+  margin-top: 5px;
+  color: var(--pass);
+}
+
+@media (max-width: 860px) {
+  .role {
+    grid-template-columns: 1fr;
+  }
+
+  .side {
+    position: static;
+  }
+}
+
+@media (max-width: 860px) {
+  .side {
+    top: auto;
+  }
+}

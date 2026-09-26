@@ -1,15 +1,13 @@
-import shared from "@/styles/shared.module.css";
-import styles from "./page.module.css";
-import Nav from "@/components/Nav";
+import Toolbar from "@/components/Toolbar";
 import CommandPalette from "@/components/CommandPalette";
-import Hero from "@/components/Hero";
-import WorkGrid from "@/components/WorkGrid";
-import StackDiagram from "@/components/StackDiagram";
-import AIWorkflow from "@/components/AIWorkflow";
+import RunHeader from "@/components/RunHeader";
+import WorkSuite from "@/components/WorkSuite";
+import ExperienceSuite from "@/components/ExperienceSuite";
+import LabSuite from "@/components/LabSuite";
+import Environment from "@/components/Environment";
 import About from "@/components/About";
-import Experience from "@/components/Experience";
-import LabGrid from "@/components/LabGrid";
 import Contact from "@/components/Contact";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
@@ -17,19 +15,14 @@ export default function Home() {
       <a href="#main-content" className={styles.skipLink}>
         Skip to content
       </a>
-      <Nav />
-      <main id="main-content" className={styles.main}>
-        <Hero />
-        <WorkGrid />
-        <StackDiagram />
-        <AIWorkflow />
-        <section id="about" className={styles.aboutExperience}>
-          <div className={`${shared.container} ${styles.aboutExperienceGrid}`}>
-            <About />
-          </div>
-        </section>
-        <Experience />
-        <LabGrid />
+      <Toolbar />
+      <main id="main-content">
+        <RunHeader />
+        <WorkSuite />
+        <Environment />
+        <LabSuite />
+        <ExperienceSuite />
+        <About />
         <Contact />
       </main>
       <CommandPalette />

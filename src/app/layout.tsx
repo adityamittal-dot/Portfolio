@@ -1,20 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Martian_Mono } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+// Archivo: a sturdy grotesque with a width axis, closer to the type of a
+// printed test report than to the default developer-tool sans.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Martian Mono carries every identifier (file names, tags, data) at a
+// narrow width, and the oversized numerals at its widest, heaviest cut:
+// figures that read like numbers stencilled on a machine.
+const martianMono = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
-const TITLE = "Aditya Mittal — Full Stack Engineer";
+const TITLE = "Aditya Mittal | Full-stack engineer";
 const DESCRIPTION =
-  "Aditya Mittal, full stack engineer who makes AI features hold up. React, Django, and AI integrations.";
+  "Aditya Mittal, a full-stack engineer who makes AI features hold up: React, Django, AI integrations, and the parts that break under load.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -25,6 +32,7 @@ export const metadata: Metadata = {
     "React developer",
     "Django developer",
     "AI integrations",
+    "SDET",
   ],
   robots: {
     index: true,
@@ -44,8 +52,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f6fb" },
-    { media: "(prefers-color-scheme: dark)", color: "#161826" },
+    { media: "(prefers-color-scheme: light)", color: "#f1f2ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#111315" },
   ],
 };
 
@@ -62,7 +70,11 @@ const THEME_INIT_SCRIPT = `
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${martianMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>

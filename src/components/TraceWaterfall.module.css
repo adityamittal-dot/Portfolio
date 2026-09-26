@@ -1,0 +1,125 @@
+.figure {
+  --tick: 14ms;
+  margin: 0;
+  padding: clamp(20px, 3vw, 28px);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  display: grid;
+  gap: 24px;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+}
+
+.captionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.captionNote {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.panel {
+  display: grid;
+  gap: 10px;
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.value {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.valuePass {
+  color: var(--pass);
+}
+
+.big {
+  font-family: var(--font-numeral);
+  font-variation-settings: "wdth" 112.5;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  margin-right: 4px;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 20vw, 220px);
+  border-left: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.gridline {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.chartAfter {
+  height: 24px;
+}
+
+.span {
+  fill: var(--ink-2);
+  shape-rendering: crispEdges;
+}
+
+.spanAfter {
+  fill: var(--pass);
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-stretch: var(--mono-stretch);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* Drawn once, on arrival: the staircase lays itself down request by request
+   on the page's tick, then the two batched queries land in one beat. */
+.figure[data-phase="armed"] .span {
+  opacity: 0;
+}
+
+@keyframes spanIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.figure[data-phase="play"] .span {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: spanIn 240ms var(--ease-out) backwards;
+  animation-delay: calc(var(--i) * var(--tick));
+}
+
+.figure[data-phase="play"] .spanAfter {
+  animation-duration: 420ms;
+  animation-delay: calc(96 * var(--tick) + 200ms + var(--i) * 90ms);
+}

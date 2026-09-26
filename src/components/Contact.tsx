@@ -1,34 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import shared from "@/styles/shared.module.css";
-import styles from "./Contact.module.css";
+import {
+  ArrowUpRight,
+  Check,
+  Copy,
+  DownloadSimple,
+  GithubLogo,
+  LinkedinLogo,
+  MapPin,
+  Phone,
+} from "@phosphor-icons/react/dist/ssr";
 import {
   EMAIL,
   GITHUB_URL,
   GITHUB_USERNAME,
   LINKEDIN_HANDLE,
   LINKEDIN_URL,
-  LOCATION,
   PHONE_DISPLAY,
   PHONE_TEL,
 } from "@/lib/profile";
-
-function CopyIcon({ done }: { done: boolean }) {
-  if (done) {
-    return (
-      <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
-        <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
-      <rect x="5.5" y="5.5" width="8" height="8" rx="1.4" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M3 10.5V3.9C3 3.4 3.4 3 3.9 3H10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
+import styles from "./Contact.module.css";
 
 function useLocalTime() {
   const [time, setTime] = useState<string | null>(null);
@@ -56,9 +48,12 @@ export default function Contact() {
   const [copied, setCopied] = useState(false);
   const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => {
-    if (copyTimeout.current) clearTimeout(copyTimeout.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (copyTimeout.current) clearTimeout(copyTimeout.current);
+    },
+    [],
+  );
 
   async function handleCopyEmail() {
     try {
@@ -68,115 +63,97 @@ export default function Contact() {
       setCopied(false);
     }
     if (copyTimeout.current) clearTimeout(copyTimeout.current);
-    copyTimeout.current = setTimeout(() => setCopied(false), 2200);
+    copyTimeout.current = setTimeout(() => setCopied(false), 2000);
   }
 
+  const channels = [
+    { label: "Phone", value: PHONE_DISPLAY, href: `tel:${PHONE_TEL}`, Icon: Phone, external: false },
+    { label: "GitHub", value: GITHUB_USERNAME, href: GITHUB_URL, Icon: GithubLogo, external: true },
+    { label: "LinkedIn", value: LINKEDIN_HANDLE, href: LINKEDIN_URL, Icon: LinkedinLogo, external: true },
+  ];
+
   return (
-    <section id="contact" className={styles.section}>
-      <div className={`${shared.container} ${shared.sectionHeader} ${styles.header}`}>
-        <h2 className={shared.sectionHeading}>Contact</h2>
-        <span className={shared.cornerTag}>08 / EOF</span>
-      </div>
-      <div className={`${shared.container} ${styles.inner}`}>
-        <div className={styles.terminal}>
-          <div className={styles.titlebar}>
-            <span className={styles.dots} aria-hidden="true">
-              <span className={styles.dotRed} />
-              <span className={styles.dotYellow} />
-              <span className={styles.dotGreen} />
+    <section id="contact" className={styles.section} aria-labelledby="contact-title">
+      <div className="container">
+        <h2 id="contact-title" className={styles.title}>
+          Open to internships. Email is the fastest way to reach me.
+        </h2>
+
+        <div className={styles.emailRow}>
+          <a href={`mailto:${EMAIL}`} className={styles.email}>
+            {EMAIL}
+          </a>
+          <button
+            type="button"
+            className={styles.copy}
+            onClick={handleCopyEmail}
+            aria-label="Copy email address"
+            data-copied={copied || undefined}
+          >
+            <span className={styles.copyIcon} aria-hidden="true">
+              <Copy size={18} weight="bold" className={styles.copyIdle} />
+              <Check size={18} weight="bold" className={styles.copyDone} />
             </span>
-            <span className={styles.titlebarLabel}>contact.json — zsh</span>
-          </div>
-          <div className={styles.body}>
-            <div className={styles.line}>
-              <span className={styles.promptSign}>$</span> cat contact.json
-            </div>
+            <span className={styles.copyLabel}>{copied ? "Copied" : "Copy"}</span>
+          </button>
+          <span role="status" aria-live="polite" className="sr-only">
+            {copied ? "Email copied to clipboard" : ""}
+          </span>
+        </div>
 
-            <pre className={styles.json}>
-              <span className={styles.brace}>{"{"}</span>
-              {"\n"}
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;email&quot;</span>
-              <span className={styles.punct}>: </span>
-              <a href={`mailto:${EMAIL}`} className={styles.string}>
-                &quot;{EMAIL}&quot;
-              </a>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={handleCopyEmail}
-                aria-label="Copy email address"
-              >
-                <CopyIcon done={copied} />
-              </button>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-              <span role="status" aria-live="polite" className={styles.srOnly}>
-                {copied ? "Email copied to clipboard" : ""}
-              </span>
+        <div className={styles.grid}>
+          <ul className={styles.channels}>
+            {channels.map(({ label, value, href, Icon, external }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  className={styles.channel}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  <Icon size={18} className={styles.channelIcon} aria-hidden="true" />
+                  <span className={styles.channelLabel}>{label}</span>
+                  <span className={`mono ${styles.channelValue}`}>{value}</span>
+                  {external && <ArrowUpRight size={14} weight="bold" className={styles.channelArrow} aria-hidden="true" />}
+                </a>
+              </li>
+            ))}
+            <li>
+              <div className={styles.channel}>
+                <MapPin size={18} className={styles.channelIcon} aria-hidden="true" />
+                <span className={styles.channelLabel}>Noida, India</span>
+                <span className={`mono tabular ${styles.channelValue}`}>{localTime ?? "IST, UTC+5:30"}</span>
+              </div>
+            </li>
+          </ul>
 
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;phone&quot;</span>
-              <span className={styles.punct}>: </span>
-              <a href={`tel:${PHONE_TEL}`} className={styles.string}>
-                &quot;{PHONE_DISPLAY}&quot;
-              </a>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;github&quot;</span>
-              <span className={styles.punct}>: </span>
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={styles.string}>
-                &quot;{GITHUB_USERNAME}&quot;
-              </a>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;linkedin&quot;</span>
-              <span className={styles.punct}>: </span>
-              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.string}>
-                &quot;{LINKEDIN_HANDLE}&quot;
-              </a>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;location&quot;</span>
-              <span className={styles.punct}>: </span>
-              <span className={styles.string}>&quot;{LOCATION}&quot;</span>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;local_time&quot;</span>
-              <span className={styles.punct}>: </span>
-              <span className={styles.string}>&quot;{localTime ?? "—"}&quot;</span>
-              <span className={styles.punct}>,</span>
-              {"\n"}
-
-              <span className={styles.indent}>  </span>
-              <span className={styles.key}>&quot;status&quot;</span>
-              <span className={styles.punct}>: </span>
-              <span className={styles.statusValue}>
-                <span className={styles.statusDot} aria-hidden="true" />
-                <span className={styles.string}>&quot;open_to_internships&quot;</span>
-              </span>
-              {"\n"}
-              <span className={styles.brace}>{"}"}</span>
-            </pre>
-
-            <div className={styles.comment}># built by hand · no template</div>
-            <div className={styles.line}>
-              <span className={styles.promptSign}>$</span>{" "}
-              <span className={styles.cursor} aria-hidden="true">
-                ▌
-              </span>
-            </div>
+          <div className={styles.resume}>
+            <p className={styles.resumeText}>The one-page version, for your ATS or your inbox.</p>
+            <a
+              href="/aditya-mittal-resume.pdf"
+              download="Aditya Mittal - Resume.pdf"
+              className="button button-primary"
+            >
+              <DownloadSimple size={18} weight="bold" aria-hidden="true" />
+              Download resume
+            </a>
           </div>
         </div>
       </div>
+
+      <footer className={styles.footer}>
+        <div className={`container ${styles.footerInner}`}>
+          <p>
+            Built by hand with Next.js and exported as static files.{" "}
+            <a href="https://github.com/adityamittal-dot/Portfolio" target="_blank" rel="noopener noreferrer">
+              Read the source
+            </a>
+            .
+          </p>
+          <p className={styles.footerHint}>
+            Press <kbd>/</kbd> for the console.
+          </p>
+        </div>
+      </footer>
     </section>
   );
 }

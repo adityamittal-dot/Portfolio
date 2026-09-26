@@ -1,0 +1,220 @@
+.section {
+  padding-block: clamp(56px, 7vw, 96px) 0;
+}
+
+.cases {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  padding-block: clamp(32px, 4vw, 48px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.title {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.title a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 280ms var(--ease-out);
+}
+
+.title a:hover {
+  background-size: 100% 1.5px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 10px 0 0 42px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.summary {
+  margin: 16px 0 0 42px;
+  max-width: 52ch;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* Steps: the case's own assertions, indented under the title like a
+   report's step tree, each with a small tick in the pass colour. */
+.steps {
+  list-style: none;
+  margin: 20px 0 0 42px;
+  padding: 0 0 0 16px;
+  border-left: 1px solid var(--rule);
+  display: grid;
+  gap: 10px;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.stepMark {
+  margin-top: 4px;
+  color: var(--pass);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 24px 0 0 42px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link svg {
+  transition: transform 200ms var(--ease-out);
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ─── Attachment ── */
+.attachment {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--rule), var(--shadow);
+}
+
+.attachmentBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 36px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-stretch: var(--mono-stretch);
+  font-size: 12px;
+  color: var(--pass);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 600ms var(--ease-out);
+}
+
+/* Screenshots that aren't 16:10 get a frame cut to their own shape, so
+   they show whole with no crop and no letterbox. */
+.shotContain {
+  aspect-ratio: 1400 / 640;
+}
+
+.imageContain {
+  object-position: center;
+}
+
+@media (hover: hover) {
+  .case:hover .image {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 860px) {
+  .case {
+    grid-template-columns: 1fr;
+  }
+
+  .attachment {
+    margin-left: 42px;
+  }
+}
+
+@media (max-width: 560px) {
+  .meta,
+  .summary,
+  .steps,
+  .footer,
+  .attachment {
+    margin-left: 0;
+  }
+
+  .titleRow {
+    gap: 12px;
+  }
+}

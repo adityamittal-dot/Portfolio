@@ -42,3 +42,12 @@ next-env.d.ts
 
 # local Claude Code session state
 /.claude/
+
+# impeccable working files (the surface brief, PRODUCT.md and DESIGN.md are kept)
+/.impeccable/review/
+/.impeccable/questions/
+/.impeccable/build/
+/.impeccable/mocks/
+/.impeccable/direction-payload.json
+/.impeccable/brief-body.md
+/.impeccable/config.local.json

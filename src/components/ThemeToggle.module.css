@@ -1,48 +1,65 @@
 .toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--color-divider);
-  border-radius: var(--radius-md);
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
   background: transparent;
-  color: var(--color-neutral-400);
+  color: var(--ink-2);
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  transition: color 150ms ease, background-color 150ms ease, transform 160ms var(--ease-out);
 }
 
 .toggle:hover {
-  color: var(--color-accent-300);
-  border-color: var(--color-accent-700);
+  color: var(--ink);
+  background: var(--surface);
 }
 
+.toggle:active {
+  transform: scale(0.94);
+}
+
+/* Both glyphs share one cell; the one you'd switch to is shown, and the
+   swap is a short rotate-and-blur crossfade rather than a hard cut. */
 .icon {
-  width: 15px;
-  height: 15px;
-  display: none;
+  grid-area: 1 / 1;
+  transition: opacity 220ms var(--ease-out), transform 320ms var(--ease-out), filter 220ms ease;
 }
 
-/* Default (dark, or no theme resolved yet): show the moon. */
+/* Light (the base): offer the moon. */
+.sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+  filter: blur(2px);
+}
+
 .moon {
-  display: block;
+  opacity: 1;
 }
 
-/* System/explicit light: show the sun. */
-:root[data-theme="light"] .sun {
-  display: block;
+:root[data-theme="dark"] .sun {
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
-:root[data-theme="light"] .moon {
-  display: none;
+:root[data-theme="dark"] .moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+  filter: blur(2px);
 }
 
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .sun {
-    display: block;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sun {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 
-  :root:not([data-theme="dark"]) .moon {
-    display: none;
+  :root:not([data-theme="light"]) .moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+    filter: blur(2px);
   }
 }
