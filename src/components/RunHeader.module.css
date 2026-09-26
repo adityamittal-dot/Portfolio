@@ -1,13 +1,11 @@
 /* ─── The run ───────────────────────────────────────────────────────────
-   One clock drives the page's one authored moment: on load, the test cases
-   fill the progress bar one tick at a time, the totals count up with them,
-   and then the three headline assertions go from pending to passed on the
-   same beat. It plays once. Everything renders in its passed state by
-   default; with reduced motion, or before CSS loads, the run is simply
-   already complete. */
+   One clock drives the load moment: the three headline assertions go from
+   pending to passed, one tick apart. It plays once. Everything renders in its
+   passed state by default; with reduced motion, or before CSS loads, the run
+   is simply already complete. */
 .section {
-  --tick: 90ms;
-  --run-start: 250ms;
+  --tick: 160ms;
+  --run-start: 300ms;
   padding-block: clamp(32px, 6vw, 72px) clamp(40px, 6vw, 72px);
   border-bottom: 1px solid var(--rule);
 }
@@ -16,7 +14,7 @@
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(32px, 5vw, 72px);
-  align-items: start;
+  align-items: center;
 }
 
 /* ─── Copy ── */
@@ -92,175 +90,6 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 28px;
-}
-
-/* ─── Run summary panel ── */
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  border-radius: 12px;
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--rule), var(--shadow);
-}
-
-.panelHead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.panelTitle {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.panelMeta {
-  font-size: 12px;
-  color: var(--ink-3);
-}
-
-.totals {
-  display: flex;
-  align-items: baseline;
-  gap: 28px;
-}
-
-.total {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  color: var(--pass);
-}
-
-.totalSkipped {
-  color: var(--skip);
-}
-
-.totalLabel {
-  font-size: 15px;
-  font-weight: 500;
-}
-
-@property --run-passed {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --run-skipped {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
-}
-
-/* The totals are CSS counters so they can count up with the bar and still
-   be the right number with no JavaScript at all; the real figure is also in
-   the DOM for assistive tech. */
-.count {
-  font-family: var(--font-numeral);
-  font-variation-settings: "wdth" 112.5;
-  font-weight: 700;
-  font-size: clamp(2.5rem, 2rem + 1.6vw, 3.25rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-}
-
-.countPassed {
-  counter-reset: run var(--run-passed);
-}
-
-.countSkipped {
-  counter-reset: run var(--run-skipped);
-}
-
-.count::after {
-  content: counter(run);
-}
-
-.bar {
-  display: flex;
-  gap: 3px;
-  height: 10px;
-}
-
-.segment {
-  flex: 1;
-  border-radius: 2px;
-  background: var(--pass);
-  transform-origin: left center;
-}
-
-.segmentSkipped {
-  background: var(--skip);
-}
-
-.suites {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-}
-
-.suite {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 40px;
-  font-size: 13px;
-  color: var(--ink-2);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
-  transition: color 150ms ease;
-}
-
-.suite:hover {
-  color: var(--ink);
-}
-
-.suiteResult {
-  color: var(--pass);
-}
-
-@property --suite-n {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
-}
-
-.suiteCount {
-  counter-reset: suite var(--suite-n);
-}
-
-.suiteCount::after {
-  content: counter(suite);
-}
-
-.suiteSkip {
-  color: var(--skip);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.github {
-  font-size: 12px;
-  color: var(--ink-3);
-  text-decoration: none;
-  overflow-wrap: anywhere;
-}
-
-.github:hover {
-  color: var(--ink);
-  text-decoration: underline;
 }
 
 /* ─── Headline assertions ── */
@@ -341,31 +170,6 @@
 }
 
 /* ─── The run, played once ── */
-@keyframes segmentFill {
-  from {
-    transform: scaleX(0);
-    opacity: 0.35;
-  }
-}
-
-@keyframes countPassed {
-  from {
-    --run-passed: 0;
-  }
-}
-
-@keyframes countSkipped {
-  from {
-    --run-skipped: 0;
-  }
-}
-
-@keyframes suiteCount {
-  from {
-    --suite-n: 0;
-  }
-}
-
 @keyframes markPass {
   from {
     background: transparent;
@@ -382,26 +186,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .segment {
-    animation: segmentFill calc(var(--tick) * 1.4) var(--ease-out) backwards;
-    animation-delay: calc(var(--run-start) + var(--i) * var(--tick));
-  }
-
-  .countPassed {
-    animation: countPassed calc(var(--tick) * var(--total)) linear backwards;
-    animation-delay: var(--run-start);
-  }
-
-  .countSkipped {
-    animation: countSkipped var(--tick) linear backwards;
-    animation-delay: calc(var(--run-start) + var(--tick) * (var(--total) - 1));
-  }
-
-  .suiteCount {
-    animation: suiteCount calc(var(--tick) * var(--len)) linear backwards;
-    animation-delay: calc(var(--run-start) + var(--start) * var(--tick));
-  }
-
   .assertion {
     animation: rowSettle 420ms var(--ease-out) backwards;
     animation-delay: calc(var(--run-start) + var(--i) * var(--tick) + 120ms);
@@ -432,10 +216,6 @@
 
   .ctas a {
     flex: 1 1 auto;
-  }
-
-  .panel {
-    padding: 20px;
   }
 
   .assertion {

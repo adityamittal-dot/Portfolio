@@ -39,8 +39,6 @@ export const HEADLINE_ASSERTIONS: HeadlineAssertion[] = [
   },
 ];
 
-export const RUN_TAGS = ["@full-stack", "@ai-integration", "@sdet", "@open-source"];
-
 export interface Project {
   id: string;
   title: string;
@@ -211,49 +209,90 @@ export const LAB: LabItem[] = [
   },
 ];
 
-export interface EnvironmentRow {
-  key: string;
-  values: string[];
-  /** Where this layer shows up in the work on this page: ids of projects or roles. */
-  provenIn: string[];
+/** The columns of the coverage matrix: everything on this page that shows a skill in use. */
+export const COVERAGE_COLUMNS: { id: string; label: string }[] = [
+  { id: "medvault", label: "MedVault" },
+  { id: "canopy", label: "Canopy" },
+  { id: "nexdev", label: "NexDev" },
+  { id: "portfolio", label: "Portfolio" },
+  { id: "basepair", label: "Basepair" },
+];
+
+export interface CoverageRow {
+  skill: string;
+  /** Column ids where this skill is actually in use, per the work described on this page. */
+  in: string[];
 }
 
-export const ENVIRONMENT: EnvironmentRow[] = [
-  { key: "frontend", values: ["React", "Next.js", "TypeScript", "shadcn/ui", "Tailwind", "EJS"], provenIn: ["medvault", "portfolio"] },
-  { key: "backend", values: ["Django", "DRF", "Node/Express", "JWT", "OAuth 2.0", "Temporal"], provenIn: ["medvault", "canopy", "nexdev"] },
+/**
+ * Skills against the work that proves them. Every mark traces back to a
+ * project's own tags or description, or the experience entry, above. A skill
+ * with no mark to give lives in TOOLBOX instead of getting an invented one.
+ */
+export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
   {
-    key: "ai integration",
-    values: ["Gemini API", "Schema-constrained output", "Grounded chat", "Claude API", "Claude Code", "MCP"],
-    provenIn: ["medvault", "canopy"],
-  },
-  { key: "languages", values: ["Python", "JavaScript (ES6+)", "TypeScript", "C/C++", "SQL", "HTML5", "CSS3/SCSS"], provenIn: ["canopy", "medvault", "dsa-sheet-cpp"] },
-  { key: "databases", values: ["PostgreSQL", "MongoDB"], provenIn: ["medvault", "nexdev"] },
-  { key: "testing", values: ["Playwright E2E", "Sentry", "Visual regression", "Test automation architecture"], provenIn: ["basepair"] },
-  { key: "cloud", values: ["AWS S3", "Lambda", "RDS", "EC2", "IAM", "CloudWatch", "Vercel", "Kubernetes"], provenIn: ["nexdev", "medvault"] },
-  {
-    key: "aws, deeper",
-    values: [
-      "STS", "EKS", "ECS", "CloudFront", "SQS", "SNS", "DynamoDB", "API Gateway", "VPC", "ELB",
-      "CloudFormation", "CDK", "Secrets Manager", "Parameter Store",
+    layer: "frontend",
+    rows: [
+      { skill: "React", in: ["medvault", "nexdev", "portfolio", "basepair"] },
+      { skill: "TypeScript", in: ["medvault", "portfolio"] },
+      { skill: "Next.js", in: ["portfolio"] },
     ],
-    provenIn: [],
   },
   {
-    key: "devops",
-    values: ["Docker", "Compose", "Terraform", "Git", "GitHub", "CI/CD", "npm workspaces", "Postman", "Linux/Bash"],
-    provenIn: ["nexdev"],
+    layer: "backend",
+    rows: [
+      { skill: "Python", in: ["medvault", "canopy", "basepair"] },
+      { skill: "Django", in: ["medvault", "canopy", "basepair"] },
+      { skill: "Django REST Framework", in: ["medvault"] },
+      { skill: "Node / Express", in: ["nexdev"] },
+      { skill: "JWT auth", in: ["medvault", "nexdev"] },
+      { skill: "OAuth 2.0", in: ["basepair"] },
+    ],
+  },
+  {
+    layer: "ai",
+    rows: [
+      { skill: "Gemini API", in: ["medvault", "canopy"] },
+      { skill: "Schema-constrained output", in: ["medvault"] },
+      { skill: "Grounded chat", in: ["canopy"] },
+      { skill: "tree-sitter parsing", in: ["canopy"] },
+    ],
+  },
+  {
+    layer: "data",
+    rows: [
+      { skill: "PostgreSQL", in: ["medvault"] },
+      { skill: "MongoDB", in: ["nexdev"] },
+    ],
+  },
+  {
+    layer: "infra",
+    rows: [
+      { skill: "Docker", in: ["nexdev"] },
+      { skill: "Vercel", in: ["medvault", "nexdev"] },
+      { skill: "Static export + CDN", in: ["portfolio"] },
+      { skill: "AWS S3", in: ["basepair"] },
+    ],
+  },
+  {
+    layer: "quality",
+    rows: [
+      { skill: "Playwright E2E", in: ["basepair"] },
+      { skill: "SonarQube remediation", in: ["basepair"] },
+      { skill: "Zod validation", in: ["nexdev"] },
+      { skill: "WCAG AA, reduced motion", in: ["portfolio"] },
+    ],
   },
 ];
 
-/** Display names for anything a stack row can point at. */
-export function proofLabel(id: string): string {
-  const project = PROJECTS.find((p) => p.id === id);
-  if (project) return project.title;
-  const role = ROLES.find((r) => r.id === id);
-  if (role) return role.company;
-  const lab = LAB.find((l) => l.name === id);
-  return lab ? lab.name : id;
-}
+/** Also in the toolbox: used and studied, with no public project on this page to point at yet. */
+export const TOOLBOX: string[] = [
+  "JavaScript (ES6+)", "C/C++", "SQL", "HTML5", "CSS3/SCSS", "shadcn/ui", "Tailwind", "EJS", "Temporal",
+  "Claude API", "Claude Code", "MCP", "Sentry", "Visual regression", "AWS Lambda", "RDS", "EC2", "IAM",
+  "CloudWatch", "EKS", "ECS", "CloudFront", "SQS", "SNS", "DynamoDB", "API Gateway", "VPC", "ELB",
+  "CloudFormation", "CDK", "Secrets Manager", "Parameter Store", "Kubernetes", "Terraform", "Compose",
+  "CI/CD", "npm workspaces", "Postman", "Linux/Bash",
+];
 
 export const AI_PRACTICE: { title: string; body: string }[] = [
   {

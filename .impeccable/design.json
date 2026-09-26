@@ -220,7 +220,7 @@
       {
         "name": "sheet",
         "value": "0 1px 2px rgb(21 23 26 / 0.06), 0 8px 24px -12px rgb(21 23 26 / 0.18)",
-        "purpose": "Run summary panel and screenshot attachments. Dark: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6)."
+        "purpose": "Screenshot attachments. Dark: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6)."
       },
       {
         "name": "overlay",
@@ -350,14 +350,6 @@
       "css": ".ds-assert{display:grid;grid-template-columns:28px minmax(0,13rem) minmax(0,1fr);align-items:center;column-gap:32px;padding:22px 0;border-top:1px solid var(--rule-strong,#b8bbb4);border-bottom:1px solid var(--rule,#d9dbd5);color:var(--ink,#15171a);text-decoration:none;font-family:var(--font-sans,Archivo,system-ui,sans-serif)}.ds-amark{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--pass-bg,#dcefe1);color:var(--pass,#157a3a);box-shadow:inset 0 0 0 1px var(--pass-rule,#9fd1ae);font-size:15px}.ds-num{font-family:var(--font-mono,'Martian Mono',ui-monospace,monospace);font-variation-settings:'wdth' 112.5;font-weight:700;font-size:48px;line-height:1;letter-spacing:-0.05em;font-variant-numeric:tabular-nums;transition:color 200ms ease}.ds-assert:hover .ds-num{color:var(--pass,#157a3a)}.ds-assert:focus-visible{outline:2px solid var(--pass,#157a3a);outline-offset:3px}.ds-claim{display:flex;flex-direction:column;gap:6px;font-size:18px;line-height:1.45}.ds-src{font-size:13px;color:var(--ink-3,#5e636b)}"
     },
     {
-      "name": "Run Summary Panel",
-      "kind": "card",
-      "refersTo": "run-summary-panel",
-      "description": "The one summary card: totals, segmented progress bar, suites.",
-      "html": "<aside class=\"ds-panel\"><div class=\"ds-ph\"><strong>Run summary</strong><span class=\"ds-pm\">run.log</span></div><p class=\"ds-tot\"><span class=\"ds-big\">9</span> passed <span class=\"ds-big ds-sk\">1</span> skipped</p><div class=\"ds-bar\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"ds-sks\"></i></div></aside>",
-      "css": ".ds-panel{display:flex;flex-direction:column;gap:20px;max-width:420px;padding:24px;border-radius:12px;background:var(--surface,#fafaf8);box-shadow:inset 0 0 0 1px var(--rule,#d9dbd5),0 1px 2px rgb(21 23 26/.06),0 8px 24px -12px rgb(21 23 26/.18);font-family:var(--font-sans,Archivo,system-ui,sans-serif);color:var(--ink,#15171a)}.ds-ph{display:flex;justify-content:space-between;align-items:baseline;font-size:15px}.ds-pm{font-family:var(--font-mono,'Martian Mono',ui-monospace,monospace);font-stretch:75%;font-size:12px;color:var(--ink-3,#5e636b)}.ds-tot{margin:0;display:flex;align-items:baseline;gap:10px;color:var(--pass,#157a3a);font-size:15px;font-weight:500}.ds-big{font-family:var(--font-mono,'Martian Mono',ui-monospace,monospace);font-variation-settings:'wdth' 112.5;font-weight:700;font-size:44px;line-height:1;letter-spacing:-0.04em}.ds-sk{color:var(--skip,#9a4d0b);margin-left:18px}.ds-bar{display:flex;gap:3px;height:10px}.ds-bar i{flex:1;border-radius:2px;background:var(--pass,#157a3a)}.ds-bar i.ds-sks{background:var(--skip,#9a4d0b)}"
-    },
-    {
       "name": "Command Console",
       "kind": "custom",
       "refersTo": "console",
@@ -368,12 +360,12 @@
   ],
   "narrative": {
     "northStar": "The Passing Run",
-    "overview": "**Creative North Star: \"The Passing Run\"**\n\nThe page is a test report that has just finished green. Ink sits on report paper, rows sit on hairline rules, and every claim is written as an assertion with its receipt beside it: a number, a named fix or a link. The system borrows its grammar from real test tooling (status marks, suites, pass counts, @tag chips, a trace waterfall, an environment table) and uses it straight, without costume. It exists to refuse the dark \"hero, avatar, glow, project cards\" developer portfolio.\n\nDensity is that of a report meant to be read closely and also skimmed: large type for the name, the thesis and three oversized numerals, then compact ruled rows beneath them that reward the deep read. Light mode is the base, a report open on a desk in daylight. Dark mode is the same report in a dark room (graphite paper, pale ink), not a second brand. There is one authored motion moment: on load the run plays once on a single clock, and the page is fully correct without it.\n\nThis language was derived from the direction contract and PRODUCT.md, not from a user interview.",
+    "overview": "**Creative North Star: \"The Passing Run\"**\n\nThe page is a test report that has just finished green. Ink sits on report paper, rows sit on hairline rules, and every claim is written as an assertion with its receipt beside it: a number, a named fix or a link. The system borrows its grammar from real test tooling (status marks, suites, pass counts, @tag chips, a trace waterfall, a coverage matrix) and uses it straight, without costume. It exists to refuse the dark \"hero, avatar, glow, project cards\" developer portfolio.\n\nDensity is that of a report meant to be read closely and also skimmed: large type for the name, the thesis and three oversized numerals, then compact ruled rows beneath them that reward the deep read. Light mode is the base, a report open on a desk in daylight. Dark mode is the same report in a dark room (graphite paper, pale ink), not a second brand. There is one authored motion moment: on load the run plays once on a single clock, and the page is fully correct without it.\n\nThis language was derived from the direction contract and PRODUCT.md, not from a user interview.",
     "keyCharacteristics": [
       "Cool off-white report paper (graphite in dark) with near-black ink; no gradients, glows or photographic hero.",
       "Pass-green is the only saturated colour and is spent only on proof. Amber appears only for a genuinely skipped case.",
       "Archivo carries all prose, headings and labels. Martian Mono carries identifiers and data only: narrow (75% width) for identifiers, widest and heaviest (112.5% width, 700) for livery numerals.",
-      "Hairline-ruled rows are the default container. Cards are reserved for four objects: the run summary panel, screenshot attachments, the trace figure and the command console.",
+      "Hairline-ruled rows are the default container. Cards are reserved for three objects: screenshot attachments, the trace figure and the command console.",
       "One clock drives one load-run moment; everything renders in its passed state with no JS or with reduced motion."
     ],
     "rules": [
@@ -404,14 +396,14 @@
       },
       {
         "name": "The Rules Before Cards Rule",
-        "body": "A row on a hairline is the default container. A card is only earned by an object that is a document in its own right: the run summary, an attachment, the trace figure or the console.",
+        "body": "A row on a hairline is the default container. A card is only earned by an object that is a document in its own right: an attachment, the trace figure or the console.",
         "section": "elevation"
       }
     ],
     "dos": [
       "**Do** attach a receipt (number, named fix or link) to every claim, and give every oversized numeral its source.",
-      "**Do** keep pass-green for proof only: marks, counts, receipts, the progress bar, the focus ring.",
-      "**Do** use hairline-ruled rows as the container; reach for a card only for the run summary, an attachment, the trace figure or the console.",
+      "**Do** keep pass-green for proof only: marks, counts, receipts, coverage marks, the focus ring.",
+      "**Do** use hairline-ruled rows as the container; reach for a card only for an attachment, the trace figure or the console.",
       "**Do** set identifiers, file names, @tags, keycaps and counts in Martian Mono at 75% width, and headline figures in Martian Mono at 112.5% width, weight 700, tabular.",
       "**Do** check every text token for WCAG AA against both paper and sheet in both themes.",
       "**Do** make every animation render its final state without JS and under reduced motion, and drive the load moment from one clock."

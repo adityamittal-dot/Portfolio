@@ -4,15 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { DownloadSimple, GithubLogo } from "@phosphor-icons/react/dist/ssr";
 import ThemeToggle from "./ThemeToggle";
 import { GITHUB_URL } from "@/lib/profile";
-import { LAB, PROJECTS, ROLES } from "@/lib/content";
 import { OPEN_CONSOLE_EVENT } from "./CommandPalette";
 import styles from "./Toolbar.module.css";
 
 const TABS = [
-  { id: "work", label: "Work", count: PROJECTS.length },
+  { id: "work", label: "Work" },
   { id: "stack", label: "Stack" },
-  { id: "lab", label: "Lab", count: LAB.length },
-  { id: "experience", label: "Experience", count: ROLES.length },
+  { id: "lab", label: "Lab" },
+  { id: "experience", label: "Experience" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
@@ -90,7 +89,6 @@ export default function Toolbar() {
               aria-current={active === tab.id ? "location" : undefined}
             >
               {tab.label}
-              {tab.count != null && <span className={styles.count}>{tab.count}</span>}
             </a>
           ))}
         </nav>

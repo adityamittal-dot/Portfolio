@@ -171,7 +171,7 @@ components:
 
 **Creative North Star: "The Passing Run"**
 
-The page is a test report that has just finished green. Ink sits on report paper, rows sit on hairline rules, and every claim is written as an assertion with its receipt beside it: a number, a named fix or a link. The system borrows its grammar from real test tooling (status marks, suites, pass counts, @tag chips, a trace waterfall, an environment table) and uses it straight, without costume. It exists to refuse the dark "hero, avatar, glow, project cards" developer portfolio.
+The page is a test report that has just finished green. Ink sits on report paper, rows sit on hairline rules, and every claim is written as an assertion with its receipt beside it: a number, a named fix or a link. The system borrows its grammar from real test tooling (status marks, suites, pass counts, @tag chips, a trace waterfall, a coverage matrix) and uses it straight, without costume. It exists to refuse the dark "hero, avatar, glow, project cards" developer portfolio.
 
 Density is that of a report meant to be read closely and also skimmed: large type for the name, the thesis and three oversized numerals, then compact ruled rows beneath them that reward the deep read. Light mode is the base, a report open on a desk in daylight. Dark mode is the same report in a dark room (graphite paper, pale ink), not a second brand. There is one authored motion moment: on load the run plays once on a single clock, and the page is fully correct without it.
 
@@ -181,7 +181,7 @@ This language was derived from the direction contract and PRODUCT.md, not from a
 - Cool off-white report paper (graphite in dark) with near-black ink; no gradients, glows or photographic hero.
 - Pass-green is the only saturated colour and is spent only on proof. Amber appears only for a genuinely skipped case.
 - Archivo carries all prose, headings and labels. Martian Mono carries identifiers and data only: narrow (75% width) for identifiers, widest and heaviest (112.5% width, 700) for livery numerals.
-- Hairline-ruled rows are the default container. Cards are reserved for four objects: the run summary panel, screenshot attachments, the trace figure and the command console.
+- Hairline-ruled rows are the default container. Cards are reserved for three objects: screenshot attachments, the trace figure and the command console.
 - One clock drives one load-run moment; everything renders in its passed state with no JS or with reduced motion.
 
 ## Colors
@@ -189,11 +189,11 @@ This language was derived from the direction contract and PRODUCT.md, not from a
 A near-achromatic report palette with one saturated signal that means "proven".
 
 ### Primary
-- **Pass Green** (pass-green; graphite-pass-green in dark): pass marks, receipts, pass counts, the progress bar, the availability flag, the console prompt, the focus ring and the hover state of an assertion's numeral. It is never used for decoration, headings or brand accents.
+- **Pass Green** (pass-green; graphite-pass-green in dark): pass marks, receipts, pass counts, coverage marks, the availability flag, the console prompt, the focus ring and the hover state of an assertion's numeral. It is never used for decoration, headings or brand accents.
 - **Pass Wash** and **Pass Rule** (pass-wash, pass-rule): the tinted fill and 1px inset ring that sit behind pass-green in status marks, the "open to internships" pill, proof links and the copied state of the copy button. Pass wash is also the text selection colour.
 
 ### Secondary
-- **Skip Amber** (skip-amber, with skip-wash): only for cases whose real status is skipped (the skipped total, a skipped bar segment, a skipped status mark, a lab row without a public link). It is not a warning or highlight colour.
+- **Skip Amber** (skip-amber, with skip-wash): only for cases whose real status is skipped (a skipped status mark, a skipped count, a lab row without a public link). It is not a warning or highlight colour.
 
 ### Neutral
 - **Report Paper** (report-paper / graphite-paper): the page ground and the browser theme colour.
@@ -239,23 +239,23 @@ A single centred column with a 1200px measure and a fluid gutter (16px on phones
 
 Sections follow report order: run header, then the suites (Work, Environment, Lab, Experience), then About and Contact. Each suite opens with a header row: title on the left, mono pass result and meta on the right, with a strong hairline beneath. Section spacing is fluid (56–96px) and rows inside a suite breathe at 32–48px.
 
-Grids are asymmetric: the run header is 7fr / 5fr (copy / summary panel); Work cases are text plus a 520px attachment; Experience is a 300px sticky fact column beside the wide work column; Lab rows are a dense four-column line (mark, cover, text, link). Every multi-column layout collapses to one column by 960px or earlier, and the indented step trees drop their 42px indent below 560px.
+Grids are asymmetric: the run header is 7fr / 5fr (copy / mascot); Work cases are text plus a 520px attachment; Experience is a 300px sticky fact column beside the wide work column; Lab rows are a dense four-column line (mark, cover, text, link). Every multi-column layout collapses to one column by 960px or earlier, and the indented step trees drop their 42px indent below 560px.
 
 ## Elevation & Depth
 
-Mostly flat, with depth from tone and hairlines. The ground is paper; a card is a sheet one tone lighter with a 1px inset ring. Only three objects add a cast shadow: the run summary panel and screenshot attachments use the soft ambient shadow, and the command console, the only overlay, uses the large shadow over a scrim. The About section is a full-width sheet-toned band between two hairlines, which is tonal layering rather than elevation.
+Mostly flat, with depth from tone and hairlines. The ground is paper; a card is a sheet one tone lighter with a 1px inset ring. Only two objects add a cast shadow: screenshot attachments use the soft ambient shadow, and the command console, the only overlay, uses the large shadow over a scrim. The About section is a full-width sheet-toned band between two hairlines, which is tonal layering rather than elevation.
 
 ### Shadow Vocabulary
-- **Sheet** (`0 1px 2px rgb(21 23 26 / 0.06), 0 8px 24px -12px rgb(21 23 26 / 0.18)`): run summary panel and screenshot attachments.
+- **Sheet** (`0 1px 2px rgb(21 23 26 / 0.06), 0 8px 24px -12px rgb(21 23 26 / 0.18)`): screenshot attachments.
 - **Overlay** (`0 2px 6px rgb(21 23 26 / 0.08), 0 24px 60px -20px rgb(21 23 26 / 0.35)`): the command console only.
 - In dark mode the same two roles use black at higher opacity (0.4/0.6 and 0.45/0.75).
 
 ### Named Rules
-**The Rules Before Cards Rule.** A row on a hairline is the default container. A card is only earned by an object that is a document in its own right: the run summary, an attachment, the trace figure or the console.
+**The Rules Before Cards Rule.** A row on a hairline is the default container. A card is only earned by an object that is a document in its own right: an attachment, the trace figure or the console.
 
 ## Shapes
 
-Gently rounded and consistent. Controls are 8px, tags and tabs 6px, attachments 10px, and the large panels (run summary, trace figure, console) 12px. Keycaps are 4px with a 2px bottom border so they read as physical keys. Status marks and the availability dot are full circles, and progress bar segments are nearly square (2px). Borders are drawn as 1px inset box-shadows on cards and as real 1px borders on rows. There are no clipped corners, notches or decorative shapes.
+Gently rounded and consistent. Controls are 8px, tags and tabs 6px, attachments 10px, and the large panels (trace figure, console) 12px. Keycaps are 4px with a 2px bottom border so they read as physical keys. Status marks and the availability dot are full circles, and coverage marks are full circles with a 3px pass-wash halo. Borders are drawn as 1px inset box-shadows on cards and as real 1px borders on rows. There are no clipped corners, notches or decorative shapes.
 
 ## Components
 
@@ -274,7 +274,8 @@ Two weights in one family, confident and plain.
 
 ### Cards / Containers
 - **Report row (default):** no fill, and a 1px hairline under each row. A suite's first row sits under a strong hairline.
-- **Run summary panel:** sheet, 12px radius, 24px padding (20px on phones), hairline inset ring plus the sheet shadow.
+- **Mascot:** the page's one character, a blobatar generated from the GitHub handle `adityamittal-dot` with hue locked to 150 so it wears pass-green. Eyes track the pointer through blobatar's gaze layer (travel 3.5, settle 80ms); the body leans toward it on a time-based spring (stiffness 210, damping 26, max 22px shift and 7deg tilt) over a contact shadow that slides with the lean. Layout is cached and read only on scroll or resize. Everything stands down under reduced motion and on touch-only devices, where blobatar's idle breathing and blinking carry it alone.
+- **Coverage matrix (Stack):** skills down the side, the work across the top, a pass-green mark wherever that work uses the skill, a faint dot where it does not, and a count with a small meter. Hovering a row or a column tints its crosshair. Under 640px the grid becomes a list: each skill beside pass-washed chips naming the work it appears in. Skills with no public project go to an "Also in the toolbox" tag list rather than getting an invented mark.
 - **Attachment:** sheet, 10px radius, a 36px bar with the file name and a pass-green "live" marker, and a 16:10 screenshot that scales to 1.02 on case hover.
 - **Trace figure:** sheet, 12px radius, hairline inset ring and no cast shadow.
 
@@ -296,14 +297,14 @@ An SVG figure that draws 96 sequential spans in ink-secondary as a staircase, th
 Opened with `/` or Cmd/Ctrl+K. A 640px sheet over a scrim, 12px radius, overlay shadow, set entirely in mono with a pass-green prompt. It opens and closes instantly, with no animation, because it is summoned from the keyboard and used repeatedly.
 
 ### Motion
-One clock: a 90ms tick with a 250ms start. On load the bar segments fill tick by tick, the totals count up as CSS counters, and the assertions settle and their marks flip from pending to passed on the same beat, once. Easing is `cubic-bezier(0.23, 1, 0.32, 1)` for entrances and 150–200ms plain ease for colour changes. Under `prefers-reduced-motion`, or without JS or CSS, the run is already complete.
+One clock: a 160ms tick with a 300ms start. On load the three headline assertions settle and their marks flip from pending to passed one tick apart, once. The mascot's pointer follow is continuous, not part of the clock, and runs only while the pointer moves. Easing is `cubic-bezier(0.23, 1, 0.32, 1)` for entrances and 150–200ms plain ease for colour changes. Under `prefers-reduced-motion`, or without JS or CSS, the run is already complete.
 
 ## Do's and Don'ts
 
 ### Do:
 - **Do** attach a receipt (number, named fix or link) to every claim, and give every oversized numeral its source.
-- **Do** keep pass-green for proof only: marks, counts, receipts, the progress bar, the focus ring.
-- **Do** use hairline-ruled rows as the container; reach for a card only for the run summary, an attachment, the trace figure or the console.
+- **Do** keep pass-green for proof only: marks, counts, receipts, coverage marks, the focus ring.
+- **Do** use hairline-ruled rows as the container; reach for a card only for an attachment, the trace figure or the console.
 - **Do** set identifiers, file names, @tags, keycaps and counts in Martian Mono at 75% width, and headline figures in Martian Mono at 112.5% width, weight 700, tabular.
 - **Do** check every text token for WCAG AA against both paper and sheet in both themes.
 - **Do** make every animation render its final state without JS and under reduced motion, and drive the load moment from one clock.

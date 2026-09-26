@@ -1,0 +1,84 @@
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.stage {
+  --lean: 0;
+  --lean-abs: 0;
+  position: relative;
+  width: min(100%, 360px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.body {
+  width: 82%;
+  will-change: transform;
+  transform-origin: 50% 85%;
+}
+
+.blob {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* A contact shadow on the page: it slides a little with the lean and
+   tightens as the body tips away, so the creature reads as standing on the
+   report rather than printed on it. */
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 56%;
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(21 23 26 / 0.18), transparent);
+  transform: translateX(calc(-50% + var(--lean) * 14px)) scaleX(calc(1 - var(--lean-abs) * 0.12));
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .shadow {
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shadow {
+    background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), transparent);
+  }
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 14px;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.caption a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.caption a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.repos:empty {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .stage {
+    width: min(70%, 280px);
+  }
+}

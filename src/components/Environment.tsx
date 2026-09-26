@@ -1,53 +1,105 @@
 import SuiteHeader from "./SuiteHeader";
-import { AI_PRACTICE, ENVIRONMENT, proofLabel } from "@/lib/content";
+import { AI_PRACTICE, COVERAGE, COVERAGE_COLUMNS, TOOLBOX } from "@/lib/content";
 import styles from "./Environment.module.css";
 
-/* The report's environment block, borrowed from a datasheet's spec table:
-   what the work runs on, one layer per row. */
+/* The stack as a coverage report: skills down the side, the work across the
+   top, a mark wherever that work actually uses the skill. Hovering a row or a
+   column lights its crosshair, so "where did he use Django?" and "what is
+   MedVault built on?" are both one glance. */
 export default function Environment() {
+  const skillCount = COVERAGE.reduce((n, group) => n + group.rows.length, 0);
+  const cols = COVERAGE_COLUMNS.length;
+
   return (
     <section id="stack" className={styles.section} aria-labelledby="stack-title">
       <div className="container">
-        <SuiteHeader id="stack" title="Stack" file="environment" result={`${ENVIRONMENT.length} layers`} />
+        <SuiteHeader
+          id="stack"
+          title="Stack"
+          file="coverage"
+          result={`${skillCount} skills, each proven in the work`}
+        />
 
         <div className={styles.grid}>
-          <table className={styles.table}>
-            <caption className="sr-only">Technologies by layer, and where each is used in the work above</caption>
-            <thead>
-              <tr>
-                <th scope="col">Layer</th>
-                <th scope="col">Tools</th>
-                <th scope="col">Proven in</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ENVIRONMENT.map((row) => (
-                <tr key={row.key}>
-                  <th scope="row" className="mono">
-                    {row.key}
+          <div className={styles.scroller}>
+            <table className={styles.matrix}>
+              <caption className="sr-only">
+                Skills, and which projects or roles on this page use each one
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col" className={styles.corner}>
+                    Skill
                   </th>
-                  <td>
-                    <ul className={styles.values}>
-                      {row.values.map((v) => (
-                        <li key={v}>{v}</li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td className={styles.proof}>
-                    {row.provenIn.length > 0 ? (
-                      row.provenIn.map((id) => (
-                        <a key={id} href={`#${id}`} className={styles.proofLink}>
-                          {proofLabel(id)}
-                        </a>
-                      ))
-                    ) : (
-                      <span className={styles.proofNone}>no public project yet</span>
-                    )}
-                  </td>
+                  {COVERAGE_COLUMNS.map((col, i) => (
+                    <th key={col.id} scope="col" data-col={i} className={styles.colHead}>
+                      <a href={`#${col.id}`}>{col.label}</a>
+                    </th>
+                  ))}
+                  <th scope="col" className={styles.countHead}>
+                    Used in
+                  </th>
                 </tr>
+              </thead>
+              {COVERAGE.map((group) => (
+                <tbody key={group.layer} className={styles.group}>
+                  <tr className={styles.layerRow}>
+                    <th scope="rowgroup" colSpan={cols + 3} className="mono">
+                      {group.layer}
+                    </th>
+                  </tr>
+                  {group.rows.map((row) => (
+                    <tr key={row.skill} className={styles.row}>
+                      <th scope="row" className={styles.skill}>
+                        {row.skill}
+                      </th>
+                      {COVERAGE_COLUMNS.map((col, i) => {
+                        const used = row.in.includes(col.id);
+                        return (
+                          <td key={col.id} data-col={i} className={styles.cell}>
+                            <span
+                              className={used ? styles.hit : styles.miss}
+                              aria-hidden="true"
+                            />
+                            <span className="sr-only">
+                              {used ? `used in ${col.label}` : `not in ${col.label}`}
+                            </span>
+                          </td>
+                        );
+                      })}
+                      <td className={styles.uses} aria-hidden="true">
+                        {COVERAGE_COLUMNS.filter((col) => row.in.includes(col.id)).map((col) => (
+                          <span key={col.id}>{col.label}</span>
+                        ))}
+                      </td>
+                      <td className={styles.count}>
+                        <span className={styles.meter} aria-hidden="true">
+                          <span style={{ width: `${(row.in.length / cols) * 100}%` }} />
+                        </span>
+                        <span className="mono tabular">{row.in.length}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               ))}
-            </tbody>
-          </table>
+            </table>
+          </div>
+
+          <div className={styles.toolbox}>
+            <div>
+              <h3 className={styles.toolboxTitle}>Also in the toolbox</h3>
+              <p className={styles.toolboxNote}>
+                Used and studied, with no public project here to point at yet.
+              </p>
+            </div>
+            <ul className={styles.toolboxList}>
+              {TOOLBOX.map((tool) => (
+                <li key={tool} className="tag">
+                  {tool}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <aside className={styles.notes} aria-labelledby="ai-title">
             <div>
