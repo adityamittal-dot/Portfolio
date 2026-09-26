@@ -127,7 +127,6 @@ export default function Contact() {
           </ul>
 
           <div className={styles.resume}>
-            <p className={styles.resumeText}>The one-page version, for your ATS or your inbox.</p>
             <a
               href="/aditya-mittal-resume.pdf"
               download="Aditya Mittal - Resume.pdf"

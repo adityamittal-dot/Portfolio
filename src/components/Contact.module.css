@@ -179,11 +179,6 @@ a.channel:hover .channelArrow {
   padding-top: 18px;
 }
 
-.resumeText {
-  font-size: 15px;
-  color: var(--ink-2);
-}
-
 .footer {
   border-top: 1px solid var(--rule);
 }
