@@ -215,7 +215,6 @@ export const COVERAGE_COLUMNS: { id: string; label: string }[] = [
   { id: "canopy", label: "Canopy" },
   { id: "nexdev", label: "NexDev" },
   { id: "portfolio", label: "Portfolio" },
-  { id: "basepair", label: "Basepair" },
 ];
 
 export interface CoverageRow {
@@ -233,7 +232,7 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
   {
     layer: "frontend",
     rows: [
-      { skill: "React", in: ["medvault", "nexdev", "portfolio", "basepair"] },
+      { skill: "React", in: ["medvault", "nexdev", "portfolio"] },
       { skill: "TypeScript", in: ["medvault", "portfolio"] },
       { skill: "Next.js", in: ["portfolio"] },
     ],
@@ -241,12 +240,11 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
   {
     layer: "backend",
     rows: [
-      { skill: "Python", in: ["medvault", "canopy", "basepair"] },
-      { skill: "Django", in: ["medvault", "canopy", "basepair"] },
+      { skill: "Python", in: ["medvault", "canopy"] },
+      { skill: "Django", in: ["medvault", "canopy"] },
       { skill: "Django REST Framework", in: ["medvault"] },
       { skill: "Node / Express", in: ["nexdev"] },
       { skill: "JWT auth", in: ["medvault", "nexdev"] },
-      { skill: "OAuth 2.0", in: ["basepair"] },
     ],
   },
   {
@@ -271,14 +269,11 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
       { skill: "Docker", in: ["nexdev"] },
       { skill: "Vercel", in: ["medvault", "nexdev"] },
       { skill: "Static export + CDN", in: ["portfolio"] },
-      { skill: "AWS S3", in: ["basepair"] },
     ],
   },
   {
     layer: "quality",
     rows: [
-      { skill: "Playwright E2E", in: ["basepair"] },
-      { skill: "SonarQube remediation", in: ["basepair"] },
       { skill: "Zod validation", in: ["nexdev"] },
       { skill: "WCAG AA, reduced motion", in: ["portfolio"] },
     ],
@@ -287,6 +282,7 @@ export const COVERAGE: { layer: string; rows: CoverageRow[] }[] = [
 
 /** Also in the toolbox: used and studied, with no public project on this page to point at yet. */
 export const TOOLBOX: string[] = [
+  "Playwright E2E", "SonarQube", "OAuth 2.0", "AWS S3",
   "JavaScript (ES6+)", "C/C++", "SQL", "HTML5", "CSS3/SCSS", "shadcn/ui", "Tailwind", "EJS", "Temporal",
   "Claude API", "Claude Code", "MCP", "Sentry", "Visual regression", "AWS Lambda", "RDS", "EC2", "IAM",
   "CloudWatch", "EKS", "ECS", "CloudFront", "SQS", "SNS", "DynamoDB", "API Gateway", "VPC", "ELB",
