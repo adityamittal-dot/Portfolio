@@ -16,7 +16,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "React · TypeScript", variant: "neutral" },
     ],
     href: "https://medvault-xor.vercel.app",
-    image: "/work/medvault.png",
+    image: "/work/medvault.webp",
     live: true,
   },
   {
@@ -32,7 +32,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "Gemini API", variant: "neutral" },
     ],
     href: "https://canopy-v7hb.onrender.com/analyze/",
-    image: "/work/canopy.png",
+    image: "/work/canopy.webp",
     live: true,
   },
   {
@@ -48,7 +48,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "JWT", variant: "neutral" },
     ],
     href: "https://nex-m7gjfpkrv-adityamittal-dots-projects.vercel.app",
-    image: "/work/nexdev.png",
+    image: "/work/nexdev.webp",
     live: true,
   },
   {
@@ -64,7 +64,7 @@ const PROJECTS: WorkCardProps[] = [
       { label: "CSS Modules", variant: "neutral" },
     ],
     href: "https://github.com/adityamittal-dot/Portfolio",
-    image: "/work/portfolio.png",
+    image: "/work/portfolio.webp",
   },
 ];
 

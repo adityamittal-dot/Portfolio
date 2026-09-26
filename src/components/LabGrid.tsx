@@ -6,19 +6,19 @@ const PROJECTS = [
   {
     name: "x-flow",
     description: "Turns real GitHub activity into build-in-public posts, drafted live and published via Buffer.",
-    image: "/lab/x-flow.png",
+    image: "/lab/x-flow.webp",
   },
   {
     name: "salvo-oss",
     description: "Zero-auth job discovery, fit-scoring, and resume tailoring — open-sourced and customizable.",
     href: "https://github.com/adityamittal-dot/salvo-oss",
-    image: "/lab/salvo-oss.png",
+    image: "/lab/salvo-oss.webp",
   },
   {
     name: "dsa-sheet-cpp",
     description: "A 291-problem, 12-week DSA tracker with curated resources and per-problem notes.",
     href: "https://github.com/adityamittal-dot/DSA-Sheet-Cpp",
-    image: "/lab/dsa-sheet-cpp.png",
+    image: "/lab/dsa-sheet-cpp.webp",
   },
 ];
 
