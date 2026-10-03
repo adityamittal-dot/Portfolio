@@ -19,7 +19,7 @@ const CAT_ART = ["    /\\_/\\", "   ( o.o )", "    > ^ <", "   /|   |\\", "  (_|
 let hasLoggedCat = false;
 
 const SECTIONS: Section[] = [
-  { id: "work", blurb: "Work: MedVault, Canopy, NexDev, and this site." },
+  { id: "work", blurb: "Work: MedVault, Canopy, NexDev, Pacemark, and this site." },
   { id: "stack", blurb: "Stack: what the work runs on, and where it's proven." },
   { id: "lab", blurb: "Lab: small tools and experiments." },
   { id: "experience", blurb: "Experience: Basepair and Spelll Production." },
